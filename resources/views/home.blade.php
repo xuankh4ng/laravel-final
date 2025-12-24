@@ -4,4 +4,8 @@
 
 @auth
     <h1>{{ auth()->user()->full_name }}</h1>
+    <form action="{{ route('logout') }}" method="POST">
+        @csrf
+        <button type="submit">Logout</button>
+    </form>
 @endauth

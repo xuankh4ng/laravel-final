@@ -13,7 +13,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::view('/register', 'auth.register')->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::view('/', 'admin.dashboard')->name('admin.dashboard');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::middleware('admin')->prefix('admin')->group(function () {
+    Route::view('/', 'admin.dashboard')->name('admin.dashboard');
 });
