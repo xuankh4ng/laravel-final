@@ -4,13 +4,16 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('pages.home');
+    return view('home');
 })->name('home');
 
-Route::view('/login', 'pages.auth.login')->name('login');
+Route::view('/login', 'auth.login')->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::view('/register', 'auth.register')->name('register');
+Route::post('/register', [AuthController::class, 'register']);
+
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::view('/', 'pages.admin.dashboard')->name('admin.dashboard');
+    Route::view('/', 'admin.dashboard')->name('admin.dashboard');
 
 });
