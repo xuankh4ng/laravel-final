@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Categories;
+use App\Models\Products;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,13 +18,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // USER
+        User::factory()->admin()->create([
+            'full_name' => 'Admin Shop',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('123456'),
+        ]);
+        User::factory(10)->create();
 
-        User::factory()->create([
-            'full_name' => 'Admin',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('123456789'),
-            'role' => 'ADMIN',
+        // CATEGORIES
+        $categories = Categories::create([
+            'slug' => 'ca-phe',
+            'name' => 'Cà phê',
+        ]);
+
+        // PRODUCTS
+        Products::factory(6)->create([
+            'category_id' => $categories->id,
+        ]);
+        Products::factory(2)->outOfStock()->create([
+            'category_id' => $categories->id,
         ]);
     }
 }
