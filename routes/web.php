@@ -7,11 +7,13 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::view('/login', 'auth.login')->name('login');
-Route::post('/login', [AuthController::class, 'login']);
+Route::get('/login', function () {
+    return view('auth.auth-master');
+})->name('login');
 
-Route::view('/register', 'auth.register')->name('register');
-Route::post('/register', [AuthController::class, 'register']);
+Route::get('/register', function () {
+    return view('auth.auth-master');
+})->name('register');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
