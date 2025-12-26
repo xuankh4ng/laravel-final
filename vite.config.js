@@ -11,6 +11,8 @@ export default defineConfig({
                 'resources/css/auth-styles.css',
                 'resources/js/auth-scripts.js',
                 'resources/css/navbar.css',
+                'resources/css/product.css',
+                'resources/js/product.js',
             ],
             refresh: true,
         }),

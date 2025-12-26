@@ -4,7 +4,7 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('home');
+    return view('layouts.home');
 })->name('home');
 
 Route::get('/login', function () {
@@ -14,6 +14,10 @@ Route::get('/login', function () {
 Route::get('/register', function () {
     return view('auth.auth-master');
 })->name('register');
+
+Route::get('/products', function () {
+    return view('layouts.products');
+})->name('products');
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);

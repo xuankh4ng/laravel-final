@@ -12,7 +12,7 @@
 
       <nav class="hidden md:flex items-center justify-center gap-9">
         <a href="{{ route('home') }}" class="text-gray-600 hover:text-amber-600 font-medium text-base uppercase tracking-wide transition-colors">Trang chủ</a>
-        <a href="#" class="text-gray-600 hover:text-amber-600 font-medium text-base uppercase tracking-wide transition-colors">Sản phẩm</a>
+        <a href="{{ route('products')   }}" class="text-gray-600 hover:text-amber-600 font-medium text-base uppercase tracking-wide transition-colors">Sản phẩm</a>
         <a href="#" class="text-gray-600 hover:text-amber-600 font-medium text-base uppercase tracking-wide transition-colors">Cửa hàng</a>
         <a href="#" class="text-gray-600 hover:text-amber-600 font-medium text-base uppercase tracking-wide transition-colors">Liên hệ</a>
       </nav>

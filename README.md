@@ -9,7 +9,7 @@ cd laravel-final
 cp .env.example .env
 composer install
 npm install
-npm run dev
+npm run dev(or build)
 php artisan key:generate
 php artisan migrate
 php artisan serve
