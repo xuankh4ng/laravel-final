@@ -4,13 +4,13 @@
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
       
       <div class="flex-1 flex items-center">
-          <a href="{{ route('home') }}" class="flex items-center gap-2">
-            <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-10 w-auto object-contain">
+          <a href="{{ route('home') }}" class="flex items-center gap-1">
+            <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-18 w-auto object-contain">
             <span class="font-bold text-xl text-amber-800 tracking-tight uppercase">coffee shop</span>
           </a>
       </div>
 
-      <nav class="hidden md:flex items-center justify-center gap-8">
+      <nav class="hidden md:flex items-center justify-center gap-9">
         <a href="{{ route('home') }}" class="text-gray-600 hover:text-amber-600 font-medium text-base uppercase tracking-wide transition-colors">Trang chủ</a>
         <a href="#" class="text-gray-600 hover:text-amber-600 font-medium text-base uppercase tracking-wide transition-colors">Sản phẩm</a>
         <a href="#" class="text-gray-600 hover:text-amber-600 font-medium text-base uppercase tracking-wide transition-colors">Cửa hàng</a>
@@ -20,11 +20,7 @@
       <div class="flex-1 flex items-center justify-end gap-5">
         
         <a href="#" class="relative text-gray-600 hover:text-amber-600 transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-            </svg>
+            <img src="{{ asset('images/cart.jpg') }}" alt="Cart" class="w-6 h-6 object-contain opacity-70 hover:opacity-100 transition-opacity">
             <span class="absolute -top-2 -right-2 bg-amber-600 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">0</span>
         </a>
 
@@ -39,9 +35,9 @@
                         </svg>
                     </button>
 
-                    <div class="user-dropdown-menu absolute right-0 top-full w-48 bg-white shadow-xl rounded-lg border border-gray-100 z-50">
+                    <div class="user-dropdown-menu absolute right-0 top-full mt-2 w-48 bg-white shadow-xl rounded-lg border border-black z-50">
                         
-                        <div class="absolute -top-2 right-4 w-4 h-4 bg-white border-t border-l border-gray-100 transform rotate-45"></div>
+                        <div class="absolute -top-2 right-4 w-4 h-4 bg-white border-t border-l border-black transform rotate-45"></div>
 
                         <div class="relative bg-white rounded-lg overflow-hidden">
                             <form action="{{ route('logout') }}" method="POST" class="block w-full m-0">
@@ -51,6 +47,7 @@
                                 </button>
                             </form>
                         </div>
+
                     </div>
                     
                 </div>
