@@ -9,10 +9,17 @@ cd laravel-final
 cp .env.example .env
 composer install
 npm install
+npm run dev
 php artisan key:generate
 php artisan migrate
 php artisan serve
 ```
+
+**Reset Database**  
+```shell
+php artisan migrate:fresh --seed
+```
+
 3. **Các nhánh trong dự án:**
 - `main` : Nhánh chính, dùng để tổng hợp lại và để nộp bài.
 - `frontend` : Nhánh làm giao diện (UI).

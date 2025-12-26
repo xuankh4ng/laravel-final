@@ -9,7 +9,8 @@ export default defineConfig({
                 'resources/css/app.css', 
                 'resources/js/app.js',
                 'resources/css/auth-styles.css',
-                'resources/js/auth-scripts.js'
+                'resources/js/auth-scripts.js',
+                'resources/css/navbar.css',
             ],
             refresh: true,
         }),

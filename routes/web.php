@@ -15,6 +15,8 @@ Route::get('/register', function () {
     return view('auth.auth-master');
 })->name('register');
 
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('admin')->prefix('admin')->group(function () {
