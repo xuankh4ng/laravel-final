@@ -20,9 +20,6 @@ return new class extends Migration
             $table->integer('quantity')->default(1);
             $table->bigInteger('line_total')->default(0);   // Tổng tiền (unit_price x quantity)
             $table->timestamps();
-
-            // Tránh duplicate
-            $table->unique(['order_id', 'product_id']);
         });
     }
 
