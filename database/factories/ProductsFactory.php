@@ -19,6 +19,11 @@ class ProductsFactory extends Factory
     public function definition(): array
     {
         $products = [
+            'Cà phê Tonic',
+            'Cà phê đen đá',
+            'Cà phê Trứng',
+            'Mocha',
+            'Cà phê sủi bọt',
             'Cà Phê Sữa Đá',
             'Bạc Xỉu',
             'Cà Phê Muối',

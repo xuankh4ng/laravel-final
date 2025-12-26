@@ -9,4 +9,8 @@ class Products extends Model
 {
     /** @use HasFactory<\Database\Factories\ProductsFactory> */
     use HasFactory;
+
+    public function category() {
+        return $this->belongsTo(Categories::class, 'category_id');
+    }
 }
