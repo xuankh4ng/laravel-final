@@ -12,10 +12,9 @@
 
   @include('partials.navbar')
 
-    <div class="container-box {{ (request()->routeIs('login') || old('full_name') || $errors->has('full_name')) ? 'right-panel-active' : '' }}" id="container">
-        
-    <div class="form-container sign-up-container">
-        <form action="{{ route('login') }}" method="POST">
+    <div class="container-box {{ (request('tab') === 'register' || old('full_name') || $errors->has('full_name')) ? 'right-panel-active' : '' }}" id="container">   
+        <div class="form-container sign-up-container">
+            <form action="{{ route('register') }}" method="POST">
             @csrf
             
             <h1 class="font-bold text-2xl text-gray-700 mb-2">ĐĂNG KÝ</h1>
@@ -47,15 +46,15 @@
             
             <label class="form-label">Mật khẩu</label>
             <input type="password" name="password" placeholder="......." required />
-            
-            @error('email')
-                <span class="text-red-500 text-sm font-bold mt-2 block">
-                    {{ $message }}
-                </span>
-            @enderror
 
             <button type="submit" class="btn-primary">Đăng nhập</button>
             <a href="#" class="text-sm text-gray-500 hover:text-gray-800 mt-2 mb-2">Quên mật khẩu?</a>
+            
+            @error('email_login')
+                <span class="text-red-500 text-sm font-bold mt-2 mb-2 block">
+                    {{ $message }}
+                </span>
+            @enderror
 
         </form>
     </div>

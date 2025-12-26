@@ -52,10 +52,10 @@
                     
                 </div>
             @else
-                <a href="{{ route('login') }}" class="text-gray-600 font-medium text-sm hover:text-amber-600 transition">
+                <a href="{{ route('auth', ['tab' => 'login']) }}" class="text-gray-600 font-medium text-sm hover:text-amber-600 transition">
                     Đăng nhập
                 </a>
-                <a href="{{ route('register') }}" class="px-4 py-2 bg-amber-800 hover:bg-amber-900 text-white text-sm font-bold rounded-full shadow-md transition">
+                <a href="{{ route('auth', ['tab' => 'register']) }}" class="px-4 py-2 bg-amber-800 hover:bg-amber-900 text-white text-sm font-bold rounded-full shadow-md transition">
                     Đăng ký
                 </a>
             @endauth

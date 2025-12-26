@@ -38,8 +38,8 @@ class AuthController extends Controller
             );
         } else {
             return back()->withErrors([
-                'email' => 'Thông tin đăng nhập không chính xác',
-            ])->onlyInput('email');
+                'email_login' => 'Xin vui lòng kiểm tra lại email hoặc mật khẩu.',
+            ])->onlyInput('email_login');
         }
     }
 
@@ -50,5 +50,10 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('home');
+    }
+
+    public function index()
+    {
+        return view('auth.auth-master');
     }
 }
