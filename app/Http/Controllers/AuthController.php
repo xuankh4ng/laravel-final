@@ -37,7 +37,9 @@ class AuthController extends Controller
                 $user->role === 'ADMIN' ? route('admin.dashboard') : route('home')
             );
         } else {
-            abort(404);
+            return back()->withErrors([
+                'email' => 'Thông tin đăng nhập không chính xác',
+            ])->onlyInput('email');
         }
     }
 
