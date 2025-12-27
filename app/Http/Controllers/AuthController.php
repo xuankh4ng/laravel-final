@@ -34,7 +34,7 @@ class AuthController extends Controller
             $user = Auth::user();
 
             return redirect()->intended(
-                $user->role === 'ADMIN' ? route('admin.products') : route('home')
+                $user->role === 'ADMIN' ? route('admin.products.index') : route('home')
             );
         } else {
             abort(404);

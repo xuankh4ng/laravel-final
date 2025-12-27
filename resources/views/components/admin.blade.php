@@ -7,6 +7,7 @@
     <title>Admin Page</title>
     <link href='https://cdn.boxicons.com/3.0.6/fonts/basic/boxicons.min.css' rel='stylesheet'>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="flex min-h-screen bg-ef-bg-0">
@@ -19,7 +20,7 @@
         <nav class="flex-1 px-4 py-6 overflow-y-auto space-y-1">
             <p class="px-4 text-[10px] font-bold text-ef-grey-1 uppercase tracking-widest mb-2">Quản lý</p>
 
-            <a href="{{ route('admin.products') }}"
+            <a href="{{ route('admin.products.index') }}"
                 class="flex items-center px-4 py-2.5 bg-ef-bg-4 text-ef-green rounded-md font-medium transition-all">
                 <svg class="w-5 h-5 mr-3 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
