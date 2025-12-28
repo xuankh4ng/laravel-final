@@ -20,44 +20,45 @@
         <nav class="flex-1 px-4 py-6 overflow-y-auto space-y-1">
             <p class="px-4 text-[10px] font-bold text-ef-grey-1 uppercase tracking-widest mb-2">Quản lý</p>
 
-            <a href="{{ route('admin.products.index') }}"
-                class="flex items-center px-4 py-2.5 bg-ef-bg-4 text-ef-green rounded-md font-medium transition-all">
-                <svg class="w-5 h-5 mr-3 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                </svg>
+            <x-nav-link route="admin.products.index" activeRoute="admin.products.*">
+                <x-slot name="icon">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                </x-slot>
                 Sản phẩm
-            </a>
+            </x-nav-link>
 
-            <a href="{{ route('admin.categories') }}"
-                class="flex items-center px-4 py-2.5 text-ef-fg hover:bg-ef-bg-3 hover:text-ef-blue rounded-md transition-all group">
-                <svg class="w-5 h-5 mr-3 text-ef-grey-1 group-hover:text-ef-blue" fill="none" stroke="currentColor"
-                    viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                </svg>
+            <x-nav-link route="admin.categories.index" activeRoute="admin.categories.*">
+                <x-slot name="icon">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                    </svg>
+                </x-slot>
                 Danh mục
-            </a>
+            </x-nav-link>
 
-            <a href="{{ route('admin.orders') }}"
-                class="flex items-center px-4 py-2.5 text-ef-fg hover:bg-ef-bg-3 hover:text-ef-blue rounded-md transition-all group">
-                <svg class="w-5 h-5 mr-3 text-ef-grey-1 group-hover:text-ef-blue" fill="none" stroke="currentColor"
-                    viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                </svg>
+            <x-nav-link route="admin.orders" activeRoute="admin.orders.*">
+                <x-slot name="icon">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                    </svg>
+                </x-slot>
                 Đơn hàng
-            </a>
+            </x-nav-link>
 
-            <a href="{{ route('admin.users') }}"
-                class="flex items-center px-4 py-2.5 text-ef-fg hover:bg-ef-bg-3 hover:text-ef-blue rounded-md transition-all group">
-                <svg class="w-5 h-5 mr-3 text-ef-grey-1 group-hover:text-ef-blue" fill="none" stroke="currentColor"
-                    viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
+            <x-nav-link route="admin.users" activeRoute="admin.users.*">
+                <x-slot name="icon">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                </x-slot>
                 Người dùng
-            </a>
+            </x-nav-link>
         </nav>
 
         <div class="p-4 border-t border-ef-bg-4">
