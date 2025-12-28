@@ -1,91 +1,133 @@
 <x-admin>
-    <div class="p-8 max-w-4xl mx-auto">
-        <div class="mb-6">
-            <h1 class="text-2xl font-bold text-ef-fg">Thêm sản phẩm mới</h1>
-            <p class="text-ef-grey-1 text-sm">Điền thông tin chi tiết để niêm yết sản phẩm lên cửa hàng.</p>
+    <div class="p-4 sm:p-8 max-w-5xl mx-auto">
+        <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+                <h1 class="text-3xl font-black text-ef-fg tracking-tight">THÊM SẢN PHẨM MỚI</h1>
+            </div>
+
+            <div class="flex gap-3">
+                <a href="{{ route('admin.products.index') }}"
+                    class="px-6 py-3 bg-ef-bg-2 text-ef-red rounded-xl font-bold text-xs tracking-widest hover:bg-ef-bg-3 border border-ef-bg-4 transition-all">
+                    HỦY BỎ
+                </a>
+                <button type="submit" form="product-form" id="btn-submit-top"
+                    class="px-8 py-3 bg-ef-green text-white rounded-xl font-black text-xs tracking-widest hover:brightness-110 shadow-lg shadow-ef-blue/20 transition-all">
+                    LƯU SẢN PHẨM
+                </button>
+            </div>
         </div>
 
         @if ($errors->any())
-            <div class="mb-6 p-4 bg-red-50 border-l-4 border-ef-red rounded-r-lg flex items-center shadow-sm">
-                <svg class="w-5 h-5 text-ef-red shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <div class="mb-6 p-4 bg-ef-red/10 border border-ef-red/20 rounded-xl flex items-start shadow-sm">
+                <svg class="w-5 h-5 text-ef-red shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd"
                         d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
                         clip-rule="evenodd" />
                 </svg>
-                <p class="ml-3 text-sm font-bold text-ef-red">Vui lòng kiểm tra lại dữ liệu nhập vào!</p>
+                <div class="ml-3">
+                    <p class="text-sm font-bold text-ef-red uppercase tracking-wide">Lỗi nhập liệu!</p>
+                    <ul class="list-disc list-inside text-xs text-ef-red/80 mt-1 font-medium">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
         @endif
 
-        <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data"
-            class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <form id="product-form" action="{{ route('admin.products.store') }}" method="POST"
+            enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-12 gap-4">
             @csrf
 
-            <div class="lg:col-span-2 space-y-6">
-                <div class="bg-ef-bg-1 p-6 rounded-xl border border-ef-bg-4 shadow-sm">
-                    <div class="space-y-5">
-                        <div>
-                            <label class="text-sm font-bold text-ef-fg mb-1.5 flex items-center">
-                                Tên sản phẩm <span class="text-ef-red ml-1">*</span>
-                            </label>
-                            <input type="text" name="name" value="{{ old('name') }}" required
-                                class="w-full px-4 py-2 bg-ef-bg-0 border {{ $errors->has('name') ? 'border-ef-red ring-1 ring-ef-red/20' : 'border-ef-bg-4' }} rounded-lg focus:border-ef-blue outline-none transition-all text-ef-fg"
-                                placeholder="Nhập tên sản phẩm...">
-                            @error('name')
-                                <p class="text-ef-red text-[11px] mt-1.5 font-medium">× {{ $message }}</p>
-                            @enderror
+            <div class="lg:col-span-8 space-y-4">
+                <div class="bg-ef-bg-1 p-4 rounded-2xl border border-ef-bg-4 shadow-sm">
+                    <h2 class="text-sm font-black text-ef-fg mb-6 uppercase tracking-widest flex items-center gap-2">
+                        <span class="p-1.5 bg-ef-blue/10 text-ef-blue rounded-lg">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                        </span>
+                        Thông tin cơ bản
+                    </h2>
+
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="md:col-span-1">
+                                <label class="block text-xs font-black text-ef-fg mb-2 uppercase tracking-wider">Tên sản
+                                    phẩm <span class="text-ef-red">*</span></label>
+                                <input type="text" name="name" id="name" value="{{ old('name') }}" required
+                                    class="w-full px-4 py-3 bg-ef-bg-0 border {{ $errors->has('name') ? 'border-ef-red' : 'border-ef-bg-4' }} rounded-xl focus:border-ef-blue focus:ring-4 focus:ring-ef-blue/5 outline-none transition-all text-ef-fg font-medium"
+                                    placeholder="Nhập tên sản phẩm...">
+                            </div>
+
+                            <div class="md:col-span-1">
+                                <label class="block text-xs font-black text-ef-fg mb-2 uppercase tracking-wider">Slug
+                                    (Đường dẫn)</label>
+                                <input type="text" name="slug" id="slug" value="{{ old('slug') }}"
+                                    class="w-full px-4 py-3 bg-ef-bg-2 border border-ef-bg-4 rounded-xl outline-none text-ef-grey-1 font-mono text-sm"
+                                    placeholder="tu-dong-tao-slug" readonly>
+                            </div>
                         </div>
 
                         <div>
-                            <label class="block text-sm font-bold text-ef-fg mb-1.5">Mô tả chi tiết</label>
-                            <textarea name="description" rows="6"
-                                class="w-full px-4 py-2 bg-ef-bg-0 border {{ $errors->has('description') ? 'border-ef-red' : 'border-ef-bg-4' }} rounded-lg focus:border-ef-blue outline-none transition-all text-ef-fg text-sm"
-                                placeholder="Viết mô tả về tính năng, công dụng...">{{ old('description') }}</textarea>
-                            @error('description')
-                                <p class="text-ef-red text-[11px] mt-1.5 font-medium">× {{ $message }}</p>
-                            @enderror
+                            <label class="block text-xs font-black text-ef-fg mb-2 uppercase tracking-wider">Mô tả chi
+                                tiết</label>
+                            <textarea name="description" rows="8"
+                                class="w-full px-4 py-3 bg-ef-bg-0 border border-ef-bg-4 rounded-xl focus:border-ef-blue outline-none transition-all text-ef-fg text-sm leading-relaxed"
+                                placeholder="Viết mô tả hấp dẫn về sản phẩm của bạn...">{{ old('description') }}</textarea>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-ef-bg-1 p-6 rounded-xl border border-ef-bg-4 shadow-sm">
-                    <h3 class="font-bold text-ef-fg mb-4 text-xs uppercase tracking-widest flex items-center">
-                        <span class="w-1.5 h-1.5 bg-ef-green rounded-full mr-2"></span>
-                        Thông tin kinh doanh
-                    </h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div class="bg-ef-bg-1 p-4 rounded-2xl border border-ef-bg-4 shadow-sm">
+                    <h2 class="text-sm font-black text-ef-fg mb-6 uppercase tracking-widest flex items-center gap-2">
+                        <span class="p-1.5 bg-ef-green/10 text-ef-green rounded-lg">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </span>
+                        Giá cả & Kho hàng
+                    </h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
                         <div>
-                            <label class="block text-sm font-bold text-ef-fg mb-1.5">Giá bán (VNĐ) <span
-                                    class="text-ef-red">*</span></label>
-                            <div class="relative">
+                            <label class="block text-xs font-black text-ef-fg mb-2 uppercase tracking-wider">Giá bán
+                                niêm yết</label>
+                            <div class="relative group">
                                 <input type="number" name="price" value="{{ old('price', 0) }}" required
-                                    class="w-full pl-4 pr-12 py-2 bg-ef-bg-0 border {{ $errors->has('price') ? 'border-ef-red' : 'border-ef-bg-4' }} rounded-lg outline-none focus:border-ef-blue font-bold text-ef-orange">
-                                <span class="absolute right-4 top-2 text-[10px] text-ef-grey-1 font-bold">VNĐ</span>
+                                    class="w-full pl-5 pr-16 py-4 bg-ef-bg-0 border border-ef-bg-4 rounded-xl outline-none focus:border-ef-orange focus:ring-4 focus:ring-ef-orange/5 font-black text-xl text-ef-orange transition-all">
+                                <span
+                                    class="absolute right-5 top-1/2 -translate-y-1/2 text-xs font-black text-ef-grey-1 tracking-widest">VNĐ</span>
                             </div>
-                            @error('price')
-                                <p class="text-ef-red text-[11px] mt-1.5 font-medium">× {{ $message }}</p>
-                            @enderror
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-ef-fg mb-1.5">Trạng thái kho <span
-                                    class="text-ef-red">*</span></label>
-                            <select name="stock_status"
-                                class="w-full px-4 py-2 bg-ef-bg-0 border border-ef-bg-4 rounded-lg outline-none cursor-pointer focus:border-ef-blue">
-                                <option value="AVAILABLE" {{ old('stock_status') == 'AVAILABLE' ? 'selected' : '' }}>
-                                    CÒN HÀNG</option>
-                                <option value="OUT_OF_STOCK"
-                                    {{ old('stock_status') == 'OUT_OF_STOCK' ? 'selected' : '' }}>HẾT HÀNG</option>
-                            </select>
+                            <label class="block text-xs font-black text-ef-fg mb-2 uppercase tracking-wider">Tình trạng
+                                kho</label>
+                            <div class="relative">
+                                <select name="stock_status" id="stock_status"
+                                    class="w-full px-5 py-4 bg-ef-bg-0 border border-ef-bg-4 rounded-xl outline-none cursor-pointer focus:border-ef-blue font-bold appearance-none transition-all">
+                                    <option value="AVAILABLE" class="text-ef-green">CÒN HÀNG</option>
+                                    <option value="OUT_OF_STOCK" class="text-ef-red">HẾT HÀNG</option>
+                                </select>
+                                <div
+                                    class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-ef-grey-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="space-y-6">
-                <div class="bg-ef-bg-1 p-6 rounded-xl border border-ef-bg-4 shadow-sm">
-                    <label class="block text-sm font-bold text-ef-fg mb-3 uppercase tracking-wider text-[11px]">Phân
-                        loại sản phẩm</label>
+            <div class="lg:col-span-4 space-y-6">
+                <div class="bg-ef-bg-1 p-6 rounded-2xl border border-ef-bg-4 shadow-sm">
+                    <label class="block text-xs font-black text-ef-fg mb-4 uppercase tracking-widest">Danh mục</label>
                     <select name="category_id" required
-                        class="w-full px-4 py-2 bg-ef-bg-0 border {{ $errors->has('category_id') ? 'border-ef-red' : 'border-ef-bg-4' }} rounded-lg outline-none mb-2 text-sm focus:border-ef-blue">
+                        class="w-full px-4 py-3 bg-ef-bg-0 border border-ef-bg-4 rounded-xl outline-none focus:border-ef-blue font-medium text-sm transition-all appearance-none">
                         <option value="">-- Chọn danh mục --</option>
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}"
@@ -94,58 +136,48 @@
                             </option>
                         @endforeach
                     </select>
-                    @error('category_id')
-                        <p class="text-ef-red text-[11px] font-medium">× {{ $message }}</p>
-                    @enderror
                 </div>
 
-                <div class="bg-ef-bg-1 p-6 rounded-xl border border-ef-bg-4 shadow-sm" id="image-container">
-                    <label class="block text-sm font-bold text-ef-fg mb-3 uppercase tracking-wider text-[11px]">Hình ảnh
-                        sản phẩm</label>
+                <div class="bg-ef-bg-1 p-6 rounded-2xl border border-ef-bg-4 shadow-sm">
+                    <label class="block text-xs font-black text-ef-fg mb-4 uppercase tracking-widest">ảnh bìa</label>
 
-                    <div class="mb-4">
+                    <div id="drop-zone" class="relative group">
                         <div id="preview-wrapper"
-                            class="relative w-full h-48 bg-ef-bg-2 rounded-lg border-2 border-dashed border-ef-bg-4 overflow-hidden flex items-center justify-center transition-all group hover:border-ef-blue/50">
+                            class="relative w-full aspect-square bg-ef-bg-2 rounded-2xl border-2 border-dashed border-ef-bg-4 overflow-hidden flex flex-col items-center justify-center transition-all group-hover:border-ef-blue/50 group-hover:bg-ef-blue/[0.02]">
+
                             <img id="image-preview" src="#" class="hidden w-full h-full object-cover">
 
-                            <div id="placeholder-info" class="text-center p-4">
-                                <svg class="w-10 h-10 mx-auto text-ef-bg-4 group-hover:text-ef-blue/40 transition-colors"
-                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
-                                <p class="mt-2 text-[10px] font-bold text-ef-grey-1 uppercase tracking-tight">Click để
-                                    chọn ảnh</p>
+                            <div id="placeholder-info"
+                                class="text-center p-6 transition-transform group-hover:scale-105">
+                                <div
+                                    class="w-16 h-16 bg-ef-bg-1 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-ef-bg-4 shadow-sm text-ef-grey-1 group-hover:text-ef-blue group-hover:border-ef-blue/20 transition-all">
+                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <p class="text-[11px] font-black text-ef-fg uppercase tracking-tighter">Click để thêm ảnh</p>
+                                <p class="mt-1 text-[10px] text-ef-grey-1 font-medium">Hỗ trợ: JPG, PNG, WEBP</p>
                             </div>
 
                             <div id="image-overlay"
-                                class="hidden absolute inset-0 bg-black/40 items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                <p class="text-white text-[10px] font-bold">THAY ĐỔI ẢNH</p>
+                                class="hidden absolute inset-0 bg-ef-fg/60 items-center justify-center opacity-0 group-hover:opacity-100 transition-all backdrop-blur-[2px]">
+                                <div
+                                    class="bg-white text-ef-fg px-4 py-2 rounded-full text-[10px] font-black tracking-widest uppercase shadow-xl">
+                                    Thay đổi ảnh</div>
                             </div>
 
                             <input type="file" name="image" id="input-image"
                                 class="absolute inset-0 opacity-0 cursor-pointer" accept="image/*">
                         </div>
                     </div>
-
-                    @error('image')
-                        <div class="p-2 bg-red-50 rounded border border-ef-red/10 mb-2">
-                            <p class="text-ef-red text-[11px] font-medium leading-tight">{{ $message }}</p>
-                        </div>
-                    @enderror
-                    <p class="text-[10px] text-ef-grey-1 text-center italic leading-tight">Định dạng hỗ trợ: JPG, PNG,
-                        WEBP (Tối đa 2MB)</p>
                 </div>
 
-                <div class="flex flex-col gap-3 pt-2">
-                    <button type="submit" id="btn-submit"
-                        class="w-full py-3.5 bg-ef-green text-ef-bg-0 rounded-xl font-black text-xs tracking-widest hover:brightness-110 shadow-lg shadow-ef-green/20 transition-all flex items-center justify-center group">
-                        <span class="group-hover:scale-110 transition-transform">XÁC NHẬN LƯU</span>
+                <div class="cursor-pointer bg-ef-bg-1 p-6 rounded-2xl border border-ef-bg-4 shadow-sm lg:hidden">
+                    <button type="submit" form="product-form"
+                        class="cursor-pointer w-full py-4 bg-ef-green text-white rounded-xl font-black text-xs tracking-widest shadow-lg shadow-ef-green/20 uppercase">
+                        XÁC NHẬN LƯU
                     </button>
-                    <a href="{{ route('admin.products.index') }}"
-                        class="w-full py-3.5 bg-ef-bg-2 text-ef-grey-1 text-center rounded-xl font-bold text-xs tracking-widest hover:bg-ef-bg-3 border border-ef-bg-4 transition-all">
-                        QUAY LẠI
-                    </a>
                 </div>
             </div>
         </form>
@@ -153,40 +185,58 @@
 </x-admin>
 
 <script>
+    const nameInput = document.getElementById('name');
+    const slugInput = document.getElementById('slug');
+
+    nameInput.addEventListener('input', function() {
+        let name = this.value;
+        let slug = name.toLowerCase()
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .replace(/[đĐ]/g, 'd')
+            .replace(/([^0-9a-z-\s])/g, '')
+            .replace(/(\s+)/g, '-')
+            .replace(/-+/g, '-')
+            .replace(/^-+|-+$/g, '');
+        slugInput.value = slug;
+    });
+
     const inputImage = document.getElementById('input-image');
     const imagePreview = document.getElementById('image-preview');
     const placeholderInfo = document.getElementById('placeholder-info');
     const overlay = document.getElementById('image-overlay');
     const wrapper = document.getElementById('preview-wrapper');
 
-    inputImage.addEventListener('change', function() {
-        const file = this.files[0];
-
-        if (file) {
-            if (file.size > 2 * 1024 * 1024) {
-                alert('Cảnh báo: File ảnh này lớn hơn 2MB, có thể gây lỗi khi upload.');
-            } else {
-                const reader = new FileReader();
-
-                reader.onload = function(e) {
-                    imagePreview.src = e.target.result;
-                    imagePreview.classList.remove('hidden');
-                    placeholderInfo.classList.add('hidden');
-                    overlay.classList.remove('hidden');
-                    overlay.classList.add('flex');
-                    wrapper.classList.remove('border-dashed');
-                    wrapper.classList.add('border-solid', 'border-ef-blue/30');
-                }
-
-                reader.readAsDataURL(file);
-            }
-
+    function handleFiles(files) {
+        const file = files[0];
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imagePreview.src = e.target.result;
+                imagePreview.classList.remove('hidden');
+                placeholderInfo.classList.add('hidden');
+                overlay.classList.remove('hidden');
+                overlay.classList.add('flex');
+                wrapper.classList.remove('border-dashed');
+                wrapper.classList.add('border-solid', 'border-ef-blue/20');
+            };
+            reader.readAsDataURL(file);
         }
+    }
+
+    inputImage.addEventListener('change', function() {
+        handleFiles(this.files);
     });
 
-    document.querySelector('form').addEventListener('submit', function() {
-        const btn = document.getElementById('btn-submit');
-        btn.innerHTML = 'ĐANG XỬ LÝ...';
-        btn.classList.add('opacity-75', 'cursor-not-allowed');
+    document.getElementById('product-form').addEventListener('submit', function() {
+        const btn = document.getElementById('btn-submit-top');
+        btn.disabled = true;
+        btn.innerHTML = `
+            <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span class="ml-2">ĐANG LƯU...</span>
+        `;
+        btn.classList.add('flex', 'items-center', 'justify-center');
     });
 </script>
