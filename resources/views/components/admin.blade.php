@@ -40,7 +40,7 @@
                 Danh mục
             </x-nav-link>
 
-            <x-nav-link route="admin.orders" activeRoute="admin.orders.*">
+            <x-nav-link route="admin.orders.index" activeRoute="admin.orders.*">
                 <x-slot name="icon">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

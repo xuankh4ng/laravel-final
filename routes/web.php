@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\OrdersController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
@@ -18,31 +19,9 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    // Products
-    Route::get('/products', [ProductController::class, 'index'])->name('admin.products.index');
-    Route::get('/products/create', [ProductController::class, 'create'])->name('admin.products.create');
-    Route::post('/products', [ProductController::class, 'store'])->name('admin.products.store');
-    Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
-    Route::put('/products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
-    Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
-
-    // Categories
-    Route::get('/categories', [CategoriesController::class, 'index'])->name('admin.categories.index');
-    Route::get('/categories/create', [CategoriesController::class, 'create'])->name('admin.categories.create');
-    Route::post('categories', [CategoriesController::class, 'store'])->name('admin.categories.store');
-    Route::get('/categories/{category}/edit', [CategoriesController::class, 'edit'])->name('admin.categories.edit');
-    Route::put('/categories/{category}', [CategoriesController::class, 'update'])->name('admin.categories.update');
-    Route::delete('/categories/{category}', [CategoriesController::class, 'destroy'])->name('admin.categories.destroy');
-
-    // Orders
-    Route::view('/orders', 'admin.orders')->name('admin.orders');
-
-    // Users
-    Route::get('/users', [UsersController::class, 'index'])->name('admin.users.index');
-    Route::get('/users/create', [UsersController::class, 'create'])->name('admin.users.create');
-    Route::post('/users', [UsersController::class, 'store'])->name('admin.users.store');
-    Route::get('/users/{user}/edit', [UsersController::class, 'edit'])->name('admin.users.edit');
-    Route::put('/users/{user}', [UsersController::class, 'update'])->name('admin.users.update');
-    Route::delete('/users/{user}', [UsersController::class, 'destroy'])->name('admin.users.destroy');
+Route::middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(function() {
+    Route::resource('products', ProductController::class);
+    Route::resource('categories', CategoriesController::class);
+    Route::resource('users', UsersController::class);
+    Route::resource('orders', OrdersController::class)->except(['create', 'store']);
 });

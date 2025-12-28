@@ -4,7 +4,7 @@
         <div class="flex items-center gap-4">
             <h1 class="text-xl text-ef-fg font-black tracking-tight uppercase">QUẢN LÝ NGƯỜI DÙNG</h1>
             <span class="bg-ef-bg-4 text-ef-grey-1 text-[10px] px-2 py-0.5 rounded-full font-bold">
-                TỔNG: {{ $users->count() }}
+                TỔNG: {{ $users->total() }}
             </span>
         </div>
 
@@ -153,6 +153,10 @@
                     @endforelse
                 </tbody>
             </table>
+        </div>
+
+        <div class="mt-8">
+            {{ $users->links() }}
         </div>
     </main>
 
