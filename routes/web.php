@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\AuthController;
@@ -38,5 +39,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::view('/orders', 'admin.orders')->name('admin.orders');
 
     // Users
-    Route::view('/users', 'admin.users')->name('admin.users');
+    Route::get('/users', [UsersController::class, 'index'])->name('admin.users.index');
+    Route::get('/users/create', [UsersController::class, 'create'])->name('admin.users.create');
+    Route::post('/users', [UsersController::class, 'store'])->name('admin.users.store');
+    Route::get('/users/{user}/edit', [UsersController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/users/{user}', [UsersController::class, 'update'])->name('admin.users.update');
+    Route::delete('/users/{user}', [UsersController::class, 'destroy'])->name('admin.users.destroy');
 });
