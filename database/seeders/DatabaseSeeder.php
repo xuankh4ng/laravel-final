@@ -33,10 +33,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // PRODUCTS
-        Products::factory(6)->create([
+        Products::factory(8)->create([
             'category_id' => $categories->id,
         ]);
-        Products::factory(2)->outOfStock()->create([
+        Products::factory(4)->outOfStock()->create([
             'category_id' => $categories->id,
         ]);
     }

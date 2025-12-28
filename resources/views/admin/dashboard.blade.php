@@ -1,5 +1,5 @@
-<h1>Admin</h1>
-<form action="{{ route('logout') }}" method="POST">
-    @csrf
-    <button type="submit">Logout</button>
-</form>
+<x-admin>
+    <header class="h-16 border-b border-ef-bg-4 bg-ef-bg-0 flex items-center px-8 sticky top-0 z-10">
+        <h1 class="text-3xl text-ef-fg font-bold">SẢN PHẨM</h1>
+    </header>
+</x-admin>
