@@ -11,9 +11,23 @@ use Illuminate\Validation\Rules\Password;
 
 class UsersController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::orderBy('created_at', 'desc')->paginate(10);
+        $users = User::query()
+            ->when($request->search, function ($query, $search) {
+                return $query->where('full_name', 'like', "%{$search}%");
+            })
+            ->when($request->role, function ($query, $role) {
+                return $query->where('role', $role);
+            })
+            ->when($request->filled('is_active'), function ($query) use ($request) {
+                $active = filter_var($request->is_active, FILTER_VALIDATE_BOOLEAN);
+                return $query->where('is_active', $active);
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->withQueryString();
+
         return view('admin.users.index', compact('users'));
     }
 

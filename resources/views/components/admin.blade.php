@@ -47,7 +47,7 @@
 
     <aside class="w-72 fixed inset-y-0 left-0 bg-ef-bg-1 border-r border-ef-bg-4 flex flex-col z-50">
         <div class="h-20 flex items-center px-8 flex-none border-b border-ef-bg-4/50">
-            <div class="flex items-center gap-3">
+            <a href="{{ route('admin.products.index') }}" class="flex items-center gap-3">
                 <div
                     class="w-10 h-10 bg-ef-green rounded-2xl flex items-center justify-center shadow-lg shadow-ef-blue/20 rotate-3 group-hover:rotate-0 transition-transform">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -59,7 +59,7 @@
                     <span class="text-sm font-black tracking-tighter text-ef-fg uppercase leading-none">ADMIN</span>
                     <span class="text-[9px] font-bold text-ef-green uppercase tracking-[0.2em] mt-1">Management</span>
                 </div>
-            </div>
+            </a>
         </div>
 
         <nav class="flex-1 px-4 py-6 overflow-y-auto space-y-8 custom-scrollbar">
@@ -157,9 +157,9 @@
         </div>
     </aside>
 
-    <main class="ml-72 flex-1 min-h-screen">
+    <div class="ml-72 flex-1 min-h-screen">
         {{ $slot }}
-    </main>
+    </div>
 
 </body>
 

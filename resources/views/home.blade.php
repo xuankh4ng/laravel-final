@@ -1,5 +1,6 @@
 @guest
     <h1>Guest</h1>
+    <a href="{{ route('login') }}">Login</a>
 @endguest
 
 @auth
