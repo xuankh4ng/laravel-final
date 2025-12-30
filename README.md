@@ -1,8 +1,7 @@
 # to-do  
 - Thêm display cửa hàng, liên hệ
-- Thêm giỏ hàng hover box
-- Thêm order hàng vào giỏ hàng
-- Thêm web UI đặt hàng
+- Thêm 'hóa đơn'
+- Thêm AI chatbox icon góc dưới trái
 
 # Setup dự án
 1. **Clone dự án (làm 1 lần):**

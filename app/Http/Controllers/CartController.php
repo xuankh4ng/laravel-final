@@ -50,4 +50,26 @@ class CartController extends Controller
 
         return redirect()->back()->with('success', 'Đã xóa sản phẩm!');
     }
+
+    public function update(Request $request, $id)
+    {
+        $cart = session()->get('cart');
+
+        if(isset($cart[$id])) {
+            if($request->action == 'increase') {
+                $cart[$id]['quantity']++;
+            } 
+            elseif ($request->action == 'decrease') {
+                $cart[$id]['quantity']--;
+                
+                if($cart[$id]['quantity'] < 1) {
+                    unset($cart[$id]);
+                }
+            }
+            
+            session()->put('cart', $cart);
+        }
+
+        return redirect()->back()->with('success', 'Đã cập nhật giỏ hàng!');
+    } 
 }

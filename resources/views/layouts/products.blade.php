@@ -69,14 +69,28 @@
                             </span>
 
                             @if($product->stock_status == 'AVAILABLE')
-                                <form action="{{ route('cart.add', $product->id) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="w-8 h-8 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center hover:bg-amber-800 hover:text-white transition-colors" title="Thêm vào giỏ hàng">
+                                
+                                @auth
+                                    {{-- NẾU ĐÃ ĐĂNG NHẬP: Hiện nút thêm giỏ hàng --}}
+                                    <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="w-8 h-8 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center hover:bg-amber-800 hover:text-white transition-colors" title="Thêm vào giỏ hàng">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                            </svg>
+                                        </button>
+                                    </form>
+                                @else
+                                    {{-- NẾU CHƯA ĐĂNG NHẬP: Chuyển người dùng đến login --}}
+                                    <a href="{{ route('auth', ['tab' => 'login']) }}" 
+                                        class="w-8 h-8 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center hover:bg-amber-800 hover:text-white transition-colors" 
+                                        title="Đăng nhập để mua hàng">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                         </svg>
-                                    </button>
-                                </form>
+                                    </a>
+                                @endauth
+
                             @else
                                 <button disabled class="px-3 py-1 bg-gray-100 text-gray-400 text-xs rounded cursor-not-allowed">
                                     Hết

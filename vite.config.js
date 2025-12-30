@@ -13,6 +13,8 @@ export default defineConfig({
                 'resources/css/navbar.css',
                 'resources/css/product.css',
                 'resources/js/product.js',
+                'resources/css/cart.css',
+                'resources/js/cart.js',
             ],
             refresh: true,
         }),
