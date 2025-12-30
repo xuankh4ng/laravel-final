@@ -1,3 +1,10 @@
+# to-do  
+- Chỉnh sửa phần cửa hàng cho display ảnh, thêm 'còn hàng' 'hết hàng'
+- Thêm display cửa hàng, liên hệ
+- Thêm giỏ hàng hover box
+- Thêm order hàng vào giỏ hàng
+- Thêm web UI đặt hàng
+
 # Setup dự án
 1. **Clone dự án (làm 1 lần):**
 ```shell
@@ -9,7 +16,7 @@ cd laravel-final
 cp .env.example .env
 composer install
 npm install
-npm run dev(or build)
+npm run build
 php artisan key:generate
 php artisan migrate
 php artisan serve

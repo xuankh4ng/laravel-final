@@ -7,15 +7,11 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('layouts.home');
-})->name('home');
+use App\Http\Controllers\UI\ProductController as UIProductController;
 
-Route::get('/products', function () {
-    return view('layouts.products');
-})->name('products');
-
+Route::get('/', function () {return view('layouts.home');})->name('home');
 Route::get('/auth', [AuthController::class, 'index'])->name('auth');
+Route::get('/products', [UIProductController::class, 'index'])->name('products');
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
