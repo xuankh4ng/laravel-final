@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sản phẩm - {{ env('APP_NAME') }}</title>
   
-  {{-- Gọi các file tài nguyên (giống như trong vite.config.js của bạn) --}}
+  {{-- Gọi các file tài nguyên --}}
   @vite([
       'resources/css/app.css', 
       'resources/js/app.js',
@@ -39,16 +39,18 @@
                 <div class="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 group border border-gray-100 overflow-hidden flex flex-col">
                     
                     <div class="relative h-48 w-full bg-gray-100 overflow-hidden">
-                        {{-- Hiển thị ảnh từ DB, nếu lỗi thì hiện ảnh placeholder --}}
                         <img src="{{ $product->image_url }}" 
-                             alt="{{ $product->name }}" 
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                             onerror="this.src='https://placehold.co/600x400?text=No+Image'">
+                                alt="{{ $product->name }}" 
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                onerror="this.src='https://placehold.co/600x400?text=No+Image'">
                         
-                        {{-- Badge Hết hàng --}}
                         @if($product->stock_status == 'OUT_OF_STOCK')
-                            <span class="absolute top-2 right-2 bg-gray-500 text-white text-xs font-bold px-2 py-1 rounded">
-                                HẾT HÀNG
+                            <span class="absolute top-2 right-2 px-2 py-1 text-[9px] font-black uppercase bg-ef-red/10 text-ef-red border border-ef-red/20 rounded-md backdrop-blur-sm whitespace-nowrap shadow-sm">
+                                ● Hết hàng
+                            </span>
+                        @else
+                            <span class="absolute top-2 right-2 px-2 py-1 text-[9px] font-black uppercase bg-ef-green/10 text-ef-green border border-ef-green/20 rounded-md backdrop-blur-sm whitespace-nowrap shadow-sm">
+                                ● Còn hàng
                             </span>
                         @endif
                     </div>

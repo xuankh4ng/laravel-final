@@ -1,5 +1,4 @@
 # to-do  
-- Chỉnh sửa phần cửa hàng cho display ảnh, thêm 'còn hàng' 'hết hàng'
 - Thêm display cửa hàng, liên hệ
 - Thêm giỏ hàng hover box
 - Thêm order hàng vào giỏ hàng
@@ -18,6 +17,7 @@ composer install
 npm install
 npm run build
 php artisan key:generate
+php artisan storage:link
 php artisan migrate
 php artisan serve
 ```

@@ -118,7 +118,7 @@
                                         class="text-ef-green">CÒN HÀNG</option>
                                     <option value="OUT_OF_STOCK"
                                         {{ old('stock_status', $product->stock_status) == 'OUT_OF_STOCK' ? 'selected' : '' }}
-                                        class="text-ef-red">HẾT HÀNG</option>
+                                        class="text-ef-red">HẾT HÀNG</option>/
                                 </select>
                                 <div
                                     class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-ef-grey-1">
