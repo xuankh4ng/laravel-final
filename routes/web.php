@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\OrdersController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\HistoryController;
+
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UI\ProductController as UIProductController;
@@ -13,16 +15,18 @@ use App\Http\Controllers\UI\ProductController as UIProductController;
 Route::get('/', function () {return view('layouts.home');})->name('home');
 Route::get('/auth', [AuthController::class, 'index'])->name('auth');
 Route::get('/products', [UIProductController::class, 'index'])->name('products');
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/cart', [CartController::class, 'index'])->name('cart');
     Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
     Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
     Route::patch('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
+    Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
+    Route::get('/history/{id}', [HistoryController::class, 'show'])->name('history.show');
 });
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(function() {

@@ -28,8 +28,8 @@
         <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-amber-500 uppercase tracking-widest font-serif mb-10 drop-shadow-md">
             Coffee Đặc Biệt
         </h1>
-        
-        <a href="#" class="inline-block px-10 py-3 border-2 border-amber-500 text-amber-500 font-bold uppercase tracking-wider transition-all duration-300 hover:bg-amber-500 hover:text-white hover:shadow-lg hover:scale-105">
+
+        <a href="{{ route('products') }}" class="inline-block px-10 py-3 border-2 border-amber-500 text-amber-500 font-bold uppercase tracking-wider transition-all duration-300 hover:bg-amber-500 hover:text-white hover:shadow-lg hover:scale-105">
             Đặt hàng ngay
         </a>
 

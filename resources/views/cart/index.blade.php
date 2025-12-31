@@ -133,8 +133,8 @@
                     <a href="{{ route('products') }}" class="px-6 py-3 text-gray-600 hover:text-amber-800 font-medium text-sm transition-colors">
                         Tiếp tục mua sắm
                     </a>
-                    
-                    <button class="bg-amber-800 hover:bg-amber-900 text-white px-10 py-3 rounded shadow-md font-bold text-base uppercase tracking-wide transition-all transform hover:-translate-y-0.5">
+
+                    <button type="button" onclick="openCheckoutModal()" class="bg-amber-800 hover:bg-amber-900 text-white px-10 py-3 rounded shadow-md font-bold text-base uppercase tracking-wide transition-all transform hover:-translate-y-0.5">
                         Mua hàng
                     </button>
                 </div>
@@ -160,42 +160,120 @@
 
   </main>
 
-  {{-- 3. MODAL CẢNH BÁO XÓA (HTML) --}}
-  <div id="confirm-delete-modal" class="fixed inset-0 z-50 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-
-    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-      <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-        
-        <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-          <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-            <div class="sm:flex sm:items-start">
-              <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-                </svg>
-              </div>
-              <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Xác nhận xóa sản phẩm</h3>
-                <div class="mt-2">
-                  <p class="text-sm text-gray-500">Bạn đang giảm số lượng về 0. Hành động này sẽ xóa sản phẩm khỏi giỏ hàng. Bạn có chắc chắn không?</p>
+    {{-- 3. MODAL CẢNH BÁO XÓA (HTML) --}}
+    <div id="confirm-delete-modal" class="fixed inset-0 z-50 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 backdrop-blur-sm transition-opacity cursor-pointer" onclick="closeModal()"></div>
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+            <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                    <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                    </svg>
                 </div>
-              </div>
+                <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                    <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Xác nhận xóa sản phẩm</h3>
+                    <div class="mt-2">
+                    <p class="text-sm text-gray-500">Bạn đang giảm số lượng về 0. Hành động này sẽ xóa sản phẩm khỏi giỏ hàng. Bạn có chắc chắn không?</p>
+                    </div>
+                </div>
+                </div>
             </div>
-          </div>
-          <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-            <button type="button" id="confirm-btn" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">
-                Đồng ý xóa
-            </button>
-            <button type="button" onclick="closeModal()" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">
-                Hủy bỏ
-            </button>
-          </div>
+            <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <button type="button" id="confirm-btn" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">
+                    Đồng ý xóa
+                </button>
+                <button type="button" onclick="closeModal()" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">
+                    Hủy bỏ
+                </button>
+            </div>
+            </div>
         </div>
-
-      </div>
+        </div>
     </div>
-  </div>
-  
+
+    {{-- 4. MODAL MUA HÀNG (CHECKOUT) --}}
+    <div id="checkout-modal" class="fixed inset-0 z-50 hidden">
+        <div class="fixed inset-0 bg-black/30 backdrop-blur-sm transition-opacity cursor-pointer" onclick="closeCheckoutModal()"></div>
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto flex items-center justify-center p-4">
+            <div class="bg-white rounded-lg shadow-2xl w-full max-w-5xl overflow-hidden animate-fade-in-up flex flex-col max-h-[90vh]">
+                <div class="bg-amber-800 text-white px-6 py-4 flex justify-between items-center">
+                    <h2 class="text-lg font-bold uppercase tracking-widest">Xác nhận đơn hàng</h2>
+                    <button onclick="closeCheckoutModal()" class="text-white hover:text-gray-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="flex-1 overflow-y-auto p-0">
+                    <div class="grid grid-cols-1 lg:grid-cols-4 h-full">
+                        <div class="lg:col-span-3 p-6 border-r border-gray-200 space-y-4">
+                            <div>
+                                <h3 class="font-bold text-gray-700 mb-3 uppercase text-sm border-b border-gray-200 pb-2">Chi tiết sản phẩm</h3>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-left text-sm text-gray-600">
+                                        <thead class="bg-gray-100 uppercase text-xs">
+                                            <tr>
+                                                <th class="px-4 py-2">Món</th>
+                                                <th class="px-4 py-2 text-center">SL</th>
+                                                <th class="px-4 py-2 text-right">Thành tiền</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-gray-100">
+                                            @foreach($cart as $item)
+                                            <tr>
+                                                <td class="px-4 py-3 font-medium">{{ $item['name'] }}</td>
+                                                <td class="px-4 py-3 text-center">x{{ $item['quantity'] }}</td>
+                                                <td class="px-4 py-3 text-right">{{ number_format($item['price'] * $item['quantity']) }}đ</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-1 bg-gray-50 p-6 flex flex-col justify-between h-full border-t lg:border-t-0">
+                            <div class="space-y-4">
+                                <h3 class="font-bold text-gray-700 uppercase text-sm border-b border-gray-200 pb-2">Thanh toán</h3>
+                                
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500">Tạm tính:</span>
+                                    <span class="font-medium">{{ number_format($total) }}đ</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500">Phí ship:</span>
+                                    <span class="font-medium">0đ</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500">Giảm giá:</span>
+                                    <span class="font-medium text-green-600">-0đ</span>
+                                </div>
+
+                                <div class="border-t border-gray-200 pt-3 mt-3">
+                                    <div class="flex flex-col items-end">
+                                        <span class="text-xs text-gray-500 font-bold uppercase">Tổng cộng</span>
+                                        <span class="text-2xl font-bold text-amber-800">{{ number_format($total) }}đ</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-8">
+                                <form action="#" method="POST">
+                                    @csrf
+                                    <button type="submit" class="w-full bg-amber-800 hover:bg-amber-900 text-white font-bold py-3 rounded shadow-lg uppercase text-sm transition-transform transform active:scale-95">
+                                        Đặt hàng
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

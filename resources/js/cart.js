@@ -1,24 +1,43 @@
-// Biến lưu trữ form
-let formToSubmit = null; 
+let formToSubmit = null;
 
-// Gắn hàm vào window để HTML có thể gọi được (onclick="checkQuantity(...)")
 window.checkQuantity = function(btn, quantity) {
     if (quantity > 1) {
-        // Nếu số lượng > 1 thì submit form giảm ngay
         btn.closest('form').submit();
     } else {
-        // Nếu số lượng = 1 thì hiện Modal
         formToSubmit = btn.closest('form');
-        document.getElementById('confirm-delete-modal').classList.remove('hidden');
+        const modal = document.getElementById('confirm-delete-modal');
+        if (modal) {
+            modal.classList.remove('hidden');
+        }
     }
 };
 
 window.closeModal = function() {
-    document.getElementById('confirm-delete-modal').classList.add('hidden');
+    const modal = document.getElementById('confirm-delete-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+    }
     formToSubmit = null;
 };
 
-// Sự kiện khi DOM đã load xong (để gắn sự kiện cho nút Confirm)
+window.openCheckoutModal = function() {
+    const modal = document.getElementById('checkout-modal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    } else {
+        console.error('Không tìm thấy modal có id="checkout-modal"');
+    }
+}
+
+window.closeCheckoutModal = function() {
+    const modal = document.getElementById('checkout-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const confirmBtn = document.getElementById('confirm-btn');
     if (confirmBtn) {
@@ -28,4 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // (Tùy chọn) Đóng modal khi bấm ESC
+    document.addEventListener('keydown', function(event) {
+        if (event.key === "Escape") {
+            window.closeModal();
+            window.closeCheckoutModal();
+        }
+    });
 });

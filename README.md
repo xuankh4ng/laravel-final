@@ -1,7 +1,8 @@
 # to-do  
 - Thêm display cửa hàng, liên hệ
+- Thêm cái khi bấm vào products card sẽ show detailed info
 - Thêm 'hóa đơn'
-- Thêm AI chatbox icon góc dưới trái
+- Thêm AI chatbox icon góc dưới phải
 
 # Setup dự án
 1. **Clone dự án (làm 1 lần):**

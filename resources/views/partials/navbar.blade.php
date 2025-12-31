@@ -93,6 +93,9 @@
                     <div class="user-dropdown-menu absolute right-0 top-full mt-2 w-48 bg-white shadow-xl rounded-lg border border-black z-50">
                         <div class="absolute -top-2 right-4 w-4 h-4 bg-white border-t border-l border-black transform rotate-45"></div>
                         <div class="relative bg-white rounded-lg overflow-hidden">
+                            <a href="{{ route('history.index') }}" class="block w-full px-4 py-3 text-sm text-gray-600 hover:bg-gray-50 hover:text-amber-800 transition-colors">
+                                Lịch sử đơn hàng
+                            </a>
                             <form action="{{ route('logout') }}" method="POST" class="block w-full m-0">
                                 @csrf
                                 <button type="submit" class="block w-full text-left px-4 py-3 text-sm text-gray-600 hover:bg-red-50 hover:text-red-600 transition-colors">
