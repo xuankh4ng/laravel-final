@@ -44,6 +44,44 @@
             @endif
         </div>
 
+        <form action="{{ route('admin.users.index') }}" method="GET" id="filter-form">
+            <div
+                class="mb-8 flex flex-col md:flex-row gap-4 items-center justify-between bg-ef-bg-1 p-5 rounded-2xl border border-ef-bg-4 shadow-sm">
+
+                <div class="w-full md:w-1/2 relative group">
+                    <span
+                        class="absolute inset-y-0 left-0 pl-4 flex items-center text-ef-grey-1 group-focus-within:text-ef-blue transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                    <input type="text" name="search" value="{{ request('search') }}"
+                        placeholder="Tìm kiếm tên người dùng..."
+                        class="w-full pl-12 pr-4 py-3 bg-ef-bg-0 border border-ef-bg-4 rounded-xl focus:outline-none focus:border-ef-blue focus:ring-1 focus:ring-ef-blue text-sm text-ef-fg transition-all">
+                </div>
+
+                <div class="flex gap-2 w-full md:w-auto">
+                    <select name="role" onchange="this.form.submit()"
+                        class="bg-ef-bg-0 border border-ef-bg-4 rounded-xl px-4 py-2 text-sm text-ef-fg focus:outline-none focus:border-ef-blue cursor-pointer transition-all">
+                        <option value="">Tất cả vai trò</option>
+                        <option value="USER" {{ request('role') == 'USER' ? 'selected' : '' }}>Người dùng</option>
+                        <option value="ADMIN" {{ request('role') == 'ADMIN' ? 'selected' : '' }}>Quản trị viên</option>
+                    </select>
+
+                    <select name="is_active" onchange="this.form.submit()"
+                        class="bg-ef-bg-0 border border-ef-bg-4 rounded-xl px-4 py-2 text-sm text-ef-fg focus:outline-none focus:border-ef-blue cursor-pointer transition-all">
+                        <option value="">Tất cả trạng thái</option>
+                        {{-- Dùng string "1" và "0" để HTML gửi dữ liệu đi chuẩn xác nhất --}}
+                        <option value="1" {{ request('is_active') === '1' ? 'selected' : '' }}>Hoạt động</option>
+                        <option value="0" {{ request('is_active') === '0' ? 'selected' : '' }}>Đã khóa</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="hidden">Tìm kiếm</button>
+            </div>
+        </form>
+
         <div class="bg-ef-bg-1 rounded-2xl border border-ef-bg-4 shadow-sm overflow-hidden">
             <table class="w-full text-left border-collapse">
                 <thead>

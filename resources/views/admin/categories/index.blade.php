@@ -48,7 +48,30 @@
             @endif
         </div>
 
-        <div class="bg-ef-bg-1 rounded-2xl border border-ef-bg-4 shadow-sm overflow-hidden">
+        <form action="" method="GET" id="filter-form">
+            <div
+                class="flex flex-col md:flex-row gap-4 items-center justify-between bg-ef-bg-1 p-5 rounded-2xl border border-ef-bg-4 shadow-sm">
+
+                <div class="w-full md:w-1/2 relative group">
+                    <span
+                        class="absolute inset-y-0 left-0 pl-4 flex items-center text-ef-grey-1 group-focus-within:text-ef-blue transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                    <input type="text" name="search" value="{{ request('search') }}"
+                        placeholder="Tìm kiếm danh mục..."
+                        class="w-full pl-12 pr-4 py-3 bg-ef-bg-0 border border-ef-bg-4 rounded-xl focus:outline-none focus:border-ef-blue focus:ring-1 focus:ring-ef-blue text-sm text-ef-fg transition-all">
+                </div>
+
+                <button type="submit"
+                    class="cursor-pointer bg-ef-green text-ef-bg-0 px-4 py-2 rounded-lg text-xs font-black tracking-widest hover:brightness-110 transition-all flex items-center shadow-lg shadow-ef-green/20">Tìm
+                    kiếm</button>
+            </div>
+        </form>
+
+        <div class="mt-8 bg-ef-bg-1 rounded-2xl border border-ef-bg-4 shadow-sm overflow-hidden">
             <table class="w-full text-left border-collapse">
                 <thead>
                     <tr class="bg-ef-bg-2 border-b border-ef-bg-4">

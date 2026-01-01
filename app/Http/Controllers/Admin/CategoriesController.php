@@ -9,9 +9,13 @@ use Illuminate\Support\Str;
 
 class CategoriesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Categories::withCount('products')->orderBy('name', 'asc')->paginate(10);
+        $categories = Categories::query()
+            ->when($request->search, function ($query, $search) {
+                return $query->where('name', 'like', "%{$search}%");
+            })
+            ->orderBy('name', 'asc')->paginate(10);
         return view('admin.categories.index', compact('categories'));
     }
 

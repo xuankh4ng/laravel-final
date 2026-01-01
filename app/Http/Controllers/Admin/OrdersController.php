@@ -8,36 +8,36 @@ use Illuminate\Http\Request;
 
 class OrdersController extends Controller
 {
-    /**
-     * Danh sách đơn hàng
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Orders::with('user')->orderBy('created_at', 'desc')->paginate(10);
+        $orders = Orders::query()
+            ->when($request->search, function ($query, $search) {
+                return $query->where('id', $search);
+            })
+            ->when($request->status, function ($query, $status) {
+                return $query->where('status', $status);
+            })
+            ->when($request->delivery_method, function ($query, $method) {
+                return $query->where('delivery_method', $method);
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->withQueryString();
+
         return view('admin.orders.index', compact('orders'));
     }
 
-    /**
-     * Xem chi tiết đơn hàng & Sản phẩm bên trong
-     */
     public function show(Orders $order)
     {
-        // Khớp với quan hệ item() và orderItems -> product trong model của bạn
         $order->load(['user', 'item.product']);
         return view('admin.orders.show', compact('order'));
     }
 
-    /**
-     * Trang chỉnh sửa thông tin đơn hàng
-     */
     public function edit(Orders $order)
     {
         return view('admin.orders.edit', compact('order'));
     }
 
-    /**
-     * Cập nhật trạng thái, địa chỉ, phí ship
-     */
     public function update(Request $request, Orders $order)
     {
         $request->validate([
@@ -50,24 +50,19 @@ class OrdersController extends Controller
 
         $data = $request->all();
 
-        // Ép phí ship về 0 nếu khách chọn tự đến lấy
         if ($request->delivery_method === 'PICKUP') {
             $data['shipping_fee'] = 0;
             $data['shipping_address'] = 'Nhận tại cửa hàng';
         }
 
-        // Tính lại tổng tiền dựa trên sub_total (có sẵn) và phí ship mới
         $data['total_price'] = $order->sub_total + $data['shipping_fee'];
 
         $order->update($data);
 
         return redirect()->route('admin.orders.index')
-                         ->with('success', 'Đã cập nhật đơn hàng #' . $order->id . ' thành công!');
+            ->with('success', 'Đã cập nhật đơn hàng #' . $order->id . ' thành công!');
     }
 
-    /**
-     * Xóa đơn hàng (Chỉ cho phép xóa khi đơn đã hủy)
-     */
     public function destroy(Orders $order)
     {
         if ($order->status !== 'CANCELED') {
@@ -76,6 +71,6 @@ class OrdersController extends Controller
 
         $order->delete();
         return redirect()->route('admin.orders.index')
-                         ->with('success', 'Đã xóa đơn hàng thành công!');
+            ->with('success', 'Đã xóa đơn hàng thành công!');
     }
 }

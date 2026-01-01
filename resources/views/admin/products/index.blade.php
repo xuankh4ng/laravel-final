@@ -18,40 +18,46 @@
     </header>
 
     <div class="p-8 max-w-7xl mx-auto space-y-8">
-        <div
-            class="flex flex-col md:flex-row gap-4 items-center justify-between bg-ef-bg-1 p-5 rounded-2xl border border-ef-bg-4 shadow-sm">
-            <div class="w-full md:w-1/2 relative group">
-                <span
-                    class="absolute inset-y-0 left-0 pl-4 flex items-center text-ef-grey-1 group-focus-within:text-ef-blue transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                </span>
-                <input type="text" placeholder="Tìm kiếm sản phẩm..."
-                    class="w-full pl-12 pr-4 py-3 bg-ef-bg-0 border border-ef-bg-4 rounded-xl focus:outline-none focus:border-ef-blue focus:ring-1 focus:ring-ef-blue text-sm text-ef-fg transition-all">
-            </div>
+        <form action="{{ route('admin.products.index') }}" method="GET" id="filter-form">
+            <div
+                class="flex flex-col md:flex-row gap-4 items-center justify-between bg-ef-bg-1 p-5 rounded-2xl border border-ef-bg-4 shadow-sm">
 
-            <div class="w-full md:w-auto flex gap-3">
-                <select
-                    class="bg-ef-bg-0 border border-ef-bg-4 rounded-xl px-4 py-3 text-sm text-ef-fg focus:outline-none focus:border-ef-blue cursor-pointer transition-all">
-                    <option>Tất cả danh mục</option>
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}"
-                            {{ request('category') == $category->id ? 'selected' : '' }}>
-                            {{ $category->name }}
-                        </option>
-                    @endforeach
-                </select>
-                <button
-                    class="px-4 py-3 bg-ef-bg-0 border border-ef-bg-4 rounded-xl text-ef-grey-1 hover:text-ef-fg hover:bg-ef-bg-2 transition-all">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-                    </svg>
-                </button>
+                <div class="w-full md:w-1/2 relative group">
+                    <span
+                        class="absolute inset-y-0 left-0 pl-4 flex items-center text-ef-grey-1 group-focus-within:text-ef-blue transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                    <input type="text" name="search" value="{{ request('search') }}"
+                        placeholder="Tìm kiếm sản phẩm..."
+                        class="w-full pl-12 pr-4 py-3 bg-ef-bg-0 border border-ef-bg-4 rounded-xl focus:outline-none focus:border-ef-blue focus:ring-1 focus:ring-ef-blue text-sm text-ef-fg transition-all">
+                </div>
+
+                <div class="w-full md:w-auto">
+                    <select name="category" onchange="document.getElementById('filter-form').submit()"
+                        class="bg-ef-bg-0 border border-ef-bg-4 rounded-xl px-4 py-2 text-sm text-ef-fg focus:outline-none focus:border-ef-blue cursor-pointer transition-all">
+                        <option value="">Tất cả danh mục</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}"
+                                {{ request('category') == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+
+                    <select name="stock_status" onchange="document.getElementById('filter-form').submit()"
+                        class="bg-ef-bg-0 border border-ef-bg-4 rounded-xl px-4 py-2 text-sm text-ef-fg focus:outline-none focus:border-ef-blue cursor-pointer transition-all">
+                        <option value="">Tất cả trạng thái</option>
+                        <option value="AVAILABLE" {{ request('stock_status') == 'AVAILABLE' ? 'selected' : '' }}>Còn hàng</option>
+                        <option value="OUT_OF_STOCK" {{ request('stock_status') == 'OUT_OF_STOCK' ? 'selected' : '' }}>Hết hàng</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="hidden">Tìm kiếm</button>
             </div>
-        </div>
+        </form>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             @forelse ($products as $product)
