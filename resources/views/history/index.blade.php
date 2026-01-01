@@ -56,9 +56,9 @@
                                 {{ number_format($order->total_price ?? 0) }}đ
                             </td>
                             <td class="py-4 px-6 text-center">
-                                @if($order->status == 'completed')
+                                @if($order->status == 'COMPLETED')
                                     <span class="status-badge status-completed">Hoàn thành</span>
-                                @elseif($order->status == 'cancelled')
+                                @elseif($order->status == 'CANCELED')
                                     <span class="status-badge status-cancelled">Đã hủy</span>
                                 @else
                                     <span class="status-badge status-pending">Đang xử lý</span>
