@@ -36,13 +36,11 @@
                 <div class="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 group border border-gray-100 overflow-hidden flex flex-col">
                     
                     <div class="relative h-48 w-full bg-gray-100 overflow-hidden">
-                        {{-- Hiển thị ảnh --}}
                         <img src="{{ $product->image_url }}" 
                                 alt="{{ $product->name }}" 
                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                 onerror="this.src='https://placehold.co/600x400?text=No+Image'">
                         
-                        {{-- Badge Trạng thái (Giữ nguyên class ef-red/ef-green gốc của bạn) --}}
                         @if($product->stock_status == 'OUT_OF_STOCK')
                             <span class="absolute top-2 right-2 px-2 py-1 text-[9px] font-black uppercase bg-ef-red/10 text-ef-red border border-ef-red/20 rounded-md backdrop-blur-sm whitespace-nowrap shadow-sm">
                                 ● Hết hàng
@@ -71,7 +69,6 @@
                             @if($product->stock_status == 'AVAILABLE')
                                 
                                 @auth
-                                    {{-- NẾU ĐÃ ĐĂNG NHẬP: Hiện nút thêm giỏ hàng --}}
                                     <form action="{{ route('cart.add', $product->id) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="w-8 h-8 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center hover:bg-amber-800 hover:text-white transition-colors" title="Thêm vào giỏ hàng">
@@ -81,7 +78,6 @@
                                         </button>
                                     </form>
                                 @else
-                                    {{-- NẾU CHƯA ĐĂNG NHẬP: Chuyển người dùng đến login --}}
                                     <a href="{{ route('auth', ['tab' => 'login']) }}" 
                                         class="w-8 h-8 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center hover:bg-amber-800 hover:text-white transition-colors" 
                                         title="Đăng nhập để mua hàng">

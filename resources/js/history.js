@@ -44,9 +44,10 @@ function renderOrderItems(items) {
 
     items.forEach(item => {
         const productName = item.product_name || item.name || 'Sản phẩm';
-        const price = item.price || 0;
+        // Prefer unit_price stored in DB, fallback to price for compatibility
+        const price = (item.unit_price ?? item.price ?? item.unitPrice) || 0;
         const qty = item.quantity || 0;
-        const total = price * qty;
+        const total = (item.line_total ?? (price * qty)) || 0;
 
         html += `
             <div class="flex items-center gap-4 py-2 border-b border-gray-100 last:border-0">

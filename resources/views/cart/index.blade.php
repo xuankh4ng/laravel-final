@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Giỏ hàng - {{ env('APP_NAME') }}</title>
   
-  {{-- Gọi các file tài nguyên (Bao gồm cả cart.css và cart.js) --}}
   @vite([
       'resources/css/app.css', 
       'resources/js/app.js',
@@ -17,10 +16,8 @@
 
 <body class="antialiased font-sans bg-gray-50 text-gray-800">
 
-  {{-- 1. Include Navbar --}}
   @include('partials.navbar')
 
-  {{-- 2. Nội dung chính --}}
   <main class="pt-24 pb-10 px-6 max-w-7xl mx-auto min-h-screen">
       
       <h1 class="text-2xl font-bold text-amber-800 uppercase tracking-wide mb-6 border-b border-gray-200 pb-2">
@@ -30,7 +27,6 @@
       @if(isset($cart) && count($cart) > 0)
         <div class="flex flex-col gap-6">
             
-            {{-- BẢNG SẢN PHẨM --}}
             <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                 <table class="w-full text-left border-collapse">
                     <thead class="bg-gray-100 text-gray-600 uppercase text-xs font-bold">
@@ -45,7 +41,6 @@
                     <tbody class="divide-y divide-gray-100">
                         @foreach($cart as $id => $item)
                         <tr class="hover:bg-gray-50 transition-colors">
-                            {{-- Cột Sản phẩm --}}
                             <td class="py-4 px-6">
                                 <div class="flex items-center gap-4">
                                     <div class="h-16 w-16 flex-shrink-0 overflow-hidden rounded border border-gray-200">
@@ -55,22 +50,18 @@
                                 </div>
                             </td>
 
-                            {{-- Cột Đơn giá --}}
                             <td class="py-4 px-6 text-center text-gray-600">
                                 {{ number_format($item['price']) }}đ
                             </td>
 
-                            {{-- Cột Số lượng --}}
                             <td class="py-4 px-6 text-center">
                                 <div class="flex items-center justify-center border border-gray-200 rounded w-fit mx-auto">
                                     
-                                    {{-- Nút GIẢM (-) --}}
                                     <form action="{{ route('cart.update', $id) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
                                         <input type="hidden" name="action" value="decrease">
                                         
-                                        {{-- SỬA: type="button" và thêm onclick checkQuantity --}}
                                         <button type="button" 
                                                 onclick="checkQuantity(this, {{ $item['quantity'] }})"
                                                 class="px-3 py-1 bg-gray-50 text-gray-600 hover:bg-gray-200 transition-colors border-r border-gray-200">
@@ -78,12 +69,10 @@
                                         </button>
                                     </form>
 
-                                    {{-- Hiển thị số lượng --}}
                                     <span class="px-4 py-1 text-sm font-medium bg-white text-gray-800 min-w-[40px]">
                                         {{ $item['quantity'] }}
                                     </span>
 
-                                    {{-- Nút TĂNG (+) --}}
                                     <form action="{{ route('cart.update', $id) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
@@ -96,12 +85,10 @@
                                 </div>
                             </td>
 
-                            {{-- Cột Số tiền --}}
                             <td class="py-4 px-6 text-center font-bold text-amber-800">
                                 {{ number_format($item['price'] * $item['quantity']) }}đ
                             </td>
 
-                            {{-- Cột Thao tác (Xóa) --}}
                             <td class="py-4 px-6 text-center">
                                 <form action="{{ route('cart.remove', $id) }}" method="POST">
                                     @csrf
@@ -119,16 +106,13 @@
                 </table>
             </div>
 
-            {{-- PHẦN TỔNG TIỀN & MUA HÀNG --}}
             <div class="flex flex-col items-end gap-4 mt-2">
                 
-                {{-- Tổng tiền --}}
                 <div class="flex items-center gap-6 text-xl">
                     <span class="text-gray-500 font-medium">Tổng thanh toán:</span>
                     <span class="text-amber-800 font-bold text-2xl">{{ number_format($total) }}đ</span>
                 </div>
 
-                {{-- Nút Mua hàng --}}
                 <div class="flex items-center gap-3">
                     <a href="{{ route('products') }}" class="px-6 py-3 text-gray-600 hover:text-amber-800 font-medium text-sm transition-colors">
                         Tiếp tục mua sắm
@@ -143,7 +127,6 @@
 
         </div>
       @else
-        {{-- EMPTY STATE --}}
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-12 flex flex-col items-center justify-center text-center h-96">
             <div class="h-32 w-32 bg-gray-50 rounded-full flex items-center justify-center mb-6">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -160,7 +143,6 @@
 
   </main>
 
-    {{-- 3. MODAL CẢNH BÁO XÓA (HTML) --}}
     <div id="confirm-delete-modal" class="fixed inset-0 z-50 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="fixed inset-0 backdrop-blur-sm transition-opacity cursor-pointer" onclick="closeModal()"></div>
         <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -194,7 +176,6 @@
         </div>
     </div>
 
-    {{-- 4. MODAL MUA HÀNG (CHECKOUT) --}}
     <div id="checkout-modal" class="fixed inset-0 z-50 hidden">
         <div class="fixed inset-0 bg-black/30 backdrop-blur-sm transition-opacity cursor-pointer" onclick="closeCheckoutModal()"></div>
         <div class="fixed inset-0 z-10 w-screen overflow-y-auto flex items-center justify-center p-4">
@@ -262,7 +243,7 @@
                             </div>
 
                             <div class="mt-8">
-                                <form action="#" method="POST">
+                                <form action="{{ route('orders.store') }}" method="POST">
                                     @csrf
                                     <button type="submit" class="w-full bg-amber-800 hover:bg-amber-900 text-white font-bold py-3 rounded shadow-lg uppercase text-sm transition-transform transform active:scale-95">
                                         Đặt hàng
