@@ -26,7 +26,7 @@ class HistoryController extends Controller
     {
         $order = Orders::where('user_id', Auth::id())
                       ->where('id', $id)
-                      ->with('item') // Load luôn danh sách món ăn từ function item()
+                      ->with('item.product') // Load danh sách món ăn và sản phẩm liên quan
                       ->first();
 
         if (!$order) {

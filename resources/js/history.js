@@ -49,10 +49,20 @@ function renderOrderItems(items) {
         const qty = item.quantity || 0;
         const total = (item.line_total ?? (price * qty)) || 0;
 
+        // Determine image URL: prefer product.image_url, then item.image, else fallback
+        let imageUrl = '/images/no-img.jpg';
+        if (item.product && item.product.image_url) {
+            const img = item.product.image_url;
+            imageUrl = (/^https?:\/\//i.test(img)) ? img : (img.startsWith('/') ? img : '/' + img);
+        } else if (item.image) {
+            const img = item.image;
+            imageUrl = (/^https?:\/\//i.test(img)) ? img : (img.startsWith('/') ? img : '/' + img);
+        }
+
         html += `
             <div class="flex items-center gap-4 py-2 border-b border-gray-100 last:border-0">
                 <div class="h-16 w-16 bg-gray-100 rounded border border-gray-200 overflow-hidden flex-shrink-0">
-                     <img src="/images/no-img.jpg" class="w-full h-full object-cover">
+                     <img src="${imageUrl}" alt="${productName}" class="w-full h-full object-cover">
                 </div>
                 <div class="flex-1">
                     <h4 class="text-sm font-bold text-gray-800">${productName}</h4>
