@@ -18,6 +18,9 @@ Route::get('/auth', [AuthController::class, 'index'])->name('auth');
 Route::get('/products', [UIProductController::class, 'index'])->name('products');
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 
+Route::get('/store', function() { return view('store.index'); })->name('store');
+Route::get('/contact', function() { return view('contact.index'); })->name('contact');
+
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 
