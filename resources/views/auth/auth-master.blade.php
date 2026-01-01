@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>{{ env('APP_NAME') }} - {{ request()->routeIs('register') ? 'Đăng ký' : 'Đăng nhập' }}</title>
-  
+
   @vite(['resources/css/app.css', 'resources/css/auth-styles.css'])
 </head>
 
@@ -12,11 +12,11 @@
 
   @include('partials.navbar')
 
-    <div class="container-box {{ (request('tab') === 'register' || old('full_name') || $errors->has('full_name')) ? 'right-panel-active' : '' }}" id="container">   
+    <div class="container-box {{ (request('tab') === 'register' || old('full_name') || $errors->has('full_name')) ? 'right-panel-active' : '' }}" id="container">
         <div class="form-container sign-up-container">
             <form action="{{ route('register') }}" method="POST">
             @csrf
-            
+
             <h1 class="font-bold text-2xl text-gray-700 mb-2">ĐĂNG KÝ</h1>
             <div class="w-full mb-4"></div>
 
@@ -29,7 +29,7 @@
             @error('email') <span class="text-red-500 text-xs self-start ml-2">{{ $message }}</span> @enderror
 
             <label class="form-label">Mật khẩu</label>
-            <input type="password" name="password" placeholder="......." required />
+            <input type="password" name="password" required />
             @error('password') <span class="text-red-500 text-xs self-start ml-2">{{ $message }}</span> @enderror
 
             <button type="submit" class="btn-primary">Đăng ký</button>
@@ -40,16 +40,16 @@
         <form action="{{ route('login') }}" method="POST">
             @csrf
             <h1 class="font-bold text-2xl text-gray-700 mb-4">ĐĂNG NHẬP</h1>
-            
+
             <label class="form-label">Email</label>
-            <input type="email" name="email" placeholder="admin@gmail.com" value="{{ old('email') }}" required />
-            
+            <input type="email" name="email" value="{{ old('email') }}" required />
+
             <label class="form-label">Mật khẩu</label>
-            <input type="password" name="password" placeholder="......." required />
+            <input type="password" name="password" required />
 
             <button type="submit" class="btn-primary">Đăng nhập</button>
             <a href="#" class="text-sm text-gray-500 hover:text-gray-800 mt-2 mb-2">Quên mật khẩu?</a>
-            
+
             @error('email_login')
                 <span class="text-red-500 text-sm font-bold mt-2 mb-2 block">
                     {{ $message }}

@@ -10,7 +10,7 @@
 
 <header class="fixed inset-x-0 top-0 z-50 bg-white border-b border-gray-100 shadow-sm font-sans">
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-      
+
       <div class="flex-1 flex items-center">
           <a href="{{ route('home') }}" class="flex items-center gap-1">
             <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-18 w-auto object-contain">
@@ -26,7 +26,7 @@
       </nav>
 
       <div class="flex-1 flex items-center justify-end gap-5">
-        
+
         <div class="relative group h-full flex items-center cursor-pointer">
             <a href="{{ route('cart') }}" class="relative text-gray-600 hover:text-amber-600 transition-colors py-2">
                 <img src="{{ asset('images/cart.jpg') }}" alt="Cart" class="w-6 h-6 object-contain opacity-70 hover:opacity-100 transition-opacity">
@@ -36,7 +36,7 @@
             </a>
 
             <div class="absolute right-0 top-full mt-2 w-80 bg-white shadow-xl rounded-lg border border-black z-50 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200 origin-top-right">
-                
+
                 <div class="absolute -top-2 right-2 w-4 h-4 bg-white border-t border-l border-black transform rotate-45"></div>
 
                 <div class="p-4">
@@ -46,7 +46,7 @@
                             @foreach($cart as $item)
                             <div class="flex items-center gap-3 hover:bg-gray-50 p-1 rounded transition">
                                 <img src="{{ asset($item['image'] ?? 'images/no-img.jpg') }}" class="w-10 h-10 object-cover rounded border border-gray-200">
-                                
+
                                 <div class="flex-1 min-w-0">
                                     <h4 class="text-sm font-semibold text-gray-800 truncate">{{ $item['name'] }}</h4>
                                     <p class="text-xs text-gray-500">{{ number_format($item['price']) }}đ x {{ $item['quantity'] }}</p>
@@ -98,7 +98,7 @@
                             </a>
                             <form action="{{ route('logout') }}" method="POST" class="block w-full m-0">
                                 @csrf
-                                <button type="submit" class="block w-full text-left px-4 py-3 text-sm text-gray-600 hover:bg-red-50 hover:text-red-600 transition-colors">
+                                <button type="submit" class="cursor-pointer block w-full text-left px-4 py-3 text-sm text-gray-600 hover:bg-red-50 hover:text-red-600 transition-colors">
                                     Đăng xuất
                                 </button>
                             </form>
