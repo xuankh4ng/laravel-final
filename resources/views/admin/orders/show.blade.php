@@ -61,13 +61,13 @@
                                         <div class="flex items-center gap-4">
                                             <div
                                                 class="w-12 h-12 bg-ef-bg-2 rounded-lg border border-ef-bg-4 flex-shrink-0">
-                                                <img src="{{ $item->product->avatar_url ?? '' }}"
+                                                <img src="{{ $item->product->image_url ?? '' }}"
                                                     class="w-full h-full object-cover rounded-lg">
                                             </div>
                                             <div>
                                                 <div class="text-sm font-bold text-ef-fg">{{ $item->product_name }}
                                                 </div>
-                                                <div class="text-[10px] text-ef-grey-1">SKU: {{ $item->product_id }}
+                                                <div class="text-[10px] text-ef-grey-1">ID: #{{ $item->product_id }}
                                                 </div>
                                             </div>
                                         </div>

@@ -11,7 +11,7 @@
         </div>
 
         <a href="{{ route('admin.products.create') }}"
-            class="inline-flex items-center px-4 py-2 bg-ef-blue text-ef-bg-0 rounded-lg font-black text-[10px] tracking-[0.15em] hover:brightness-105 transition-all shadow-sm">
+            class="inline-flex items-center px-4 py-2 bg-ef-green text-ef-bg-0 rounded-lg font-black text-[10px] tracking-[0.15em] hover:brightness-105 transition-all shadow-sm">
             <svg class="w-3.5 h-3.5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4" />
             </svg>

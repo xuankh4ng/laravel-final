@@ -15,10 +15,10 @@ class ProductController extends Controller
     {
         $categories = Categories::orderBy('name', 'asc')->get();
         $products = Products::query()
-            ->when($request->search, function($query, $search) {
+            ->when($request->search, function ($query, $search) {
                 return $query->where('name', 'like', "%{$search}%");
             })
-            ->when($request->category, function($query, $category) {
+            ->when($request->category, function ($query, $category) {
                 return $query->where('category_id', $category);
             })
             ->when($request->stock_status, function ($query, $status) {
@@ -35,9 +35,15 @@ class ProductController extends Controller
         return view('admin.products.create', compact('categories'));
     }
 
+    public function edit(Products $product)
+    {
+        $categories = Categories::all();
+        return view('admin.products.edit', compact('product', 'categories'));
+    }
+
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:200',
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric|min:0',
@@ -47,62 +53,64 @@ class ProductController extends Controller
             'stock_quantity' => 'required|numeric|min:0',
         ]);
 
-        $data = $request->all();
+        // Logic ép buộc số lượng và trạng thái đồng bộ
+        if ($validated['stock_status'] === 'OUT_OF_STOCK') {
+            $validated['stock_quantity'] = 0;
+        } elseif ($validated['stock_quantity'] == 0) {
+            $validated['stock_status'] = 'OUT_OF_STOCK';
+        }
 
-        $data['slug'] = Str::slug($request->name);
+        $validated['slug'] = Str::slug($request->name);
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('products', 'public');
-            $data['image_url'] = '/storage/' . $path;
+            $validated['image_url'] = '/storage/' . $path;
         }
 
-        Products::create($data);
+        Products::create($validated);
 
         return redirect()->route('admin.products.index')->with('success', 'Đã thêm sản phẩm mới!');
     }
 
-    public function edit(Products $product)
-    {
-        $categories = Categories::all();
-        return view('admin.products.edit', compact('product', 'categories'));
-    }
-
     public function update(Request $request, Products $product)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:200',
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric|min:0',
             'description' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
             'stock_status' => 'required|in:AVAILABLE,OUT_OF_STOCK',
+            'stock_quantity' => 'required|numeric|min:0', // Bổ sung thiếu sót
         ]);
 
-        $data = $request->all();
+        // Logic ép buộc số lượng và trạng thái đồng bộ
+        if ($validated['stock_status'] === 'OUT_OF_STOCK') {
+            $validated['stock_quantity'] = 0;
+        } elseif ($validated['stock_quantity'] == 0) {
+            $validated['stock_status'] = 'OUT_OF_STOCK';
+        }
 
         if ($product->name !== $request->name) {
-            $data['slug'] = Str::slug($request->name);
+            $validated['slug'] = Str::slug($request->name);
         }
 
         if ($request->hasFile('image')) {
             try {
+                // Xóa ảnh cũ
                 if ($product->image_url) {
-                    $relativeRawPath = parse_url($product->image_url, PHP_URL_PATH);
-                    $cleanPath = str_replace('/storage/', '', $relativeRawPath);
-
-                    if (Storage::disk('public')->exists($cleanPath)) {
-                        Storage::disk('public')->delete($cleanPath);
-                    }
+                    $cleanPath = str_replace('/storage/', '', parse_url($product->image_url, PHP_URL_PATH));
+                    Storage::disk('public')->delete($cleanPath);
                 }
 
                 $path = $request->file('image')->store('products', 'public');
-                $data['image_url'] = '/storage/' . $path;
+                $validated['image_url'] = '/storage/' . $path;
             } catch (\Exception $e) {
                 return back()->withErrors(['image' => 'Lỗi upload: ' . $e->getMessage()]);
             }
         }
 
-        $product->update($data);
+        $product->update($validated);
 
         return redirect()->route('admin.products.index')->with('success', 'Cập nhật thành công!');
     }
