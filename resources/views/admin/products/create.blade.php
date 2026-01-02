@@ -1,242 +1,231 @@
 <x-admin>
-    <div class="p-4 sm:p-8 max-w-5xl mx-auto">
-        <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div class="p-6 max-w-5xl mx-auto min-h-screen text-ef-fg">
+        <div class="mb-8 flex items-end justify-between border-b border-ef-bg-4 pb-4">
             <div>
-                <h1 class="text-3xl font-black text-ef-fg tracking-tight">THÊM SẢN PHẨM MỚI</h1>
+                <nav class="flex items-center gap-2 text-[10px] font-bold text-ef-grey-1 uppercase tracking-widest mb-1">
+                    <span>Sản phẩm</span>
+                    <span class="text-ef-bg-4">/</span>
+                </nav>
+                <h1 class="text-2xl font-black uppercase tracking-tight">Thêm món mới</h1>
             </div>
 
-            <div class="flex gap-3">
+            <div class="flex gap-2">
                 <a href="{{ route('admin.products.index') }}"
-                    class="px-6 py-3 bg-ef-bg-2 text-ef-red rounded-xl font-bold text-xs tracking-widest hover:bg-ef-bg-3 border border-ef-bg-4 transition-all">
-                    HỦY BỎ
+                    class="px-4 py-2 text-xs font-bold border border-ef-bg-4 rounded-lg hover:bg-ef-bg-2 transition-all uppercase text-ef-grey-2">
+                    Hủy
                 </a>
                 <button type="submit" form="product-form" id="btn-submit-top"
-                    class="px-8 py-3 bg-ef-green text-white rounded-xl font-black text-xs tracking-widest hover:brightness-110 shadow-lg shadow-ef-blue/20 transition-all">
-                    LƯU SẢN PHẨM
+                    class="px-6 py-2 bg-ef-green text-ef-bg-0 rounded-lg text-xs font-black hover:brightness-105 shadow-sm transition-all uppercase tracking-wider">
+                    Lưu sản phẩm
                 </button>
             </div>
         </div>
 
-        @if ($errors->any())
-            <div class="mb-6 p-4 bg-ef-red/10 border border-ef-red/20 rounded-xl flex items-start shadow-sm">
-                <svg class="w-5 h-5 text-ef-red shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd"
-                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                        clip-rule="evenodd" />
-                </svg>
-                <div class="ml-3">
-                    <p class="text-sm font-bold text-ef-red uppercase tracking-wide">Lỗi nhập liệu!</p>
-                    <ul class="list-disc list-inside text-xs text-ef-red/80 mt-1 font-medium">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        @endif
-
         <form id="product-form" action="{{ route('admin.products.store') }}" method="POST"
-            enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+            enctype="multipart/form-data" class="grid grid-cols-12 gap-6">
             @csrf
 
-            <div class="lg:col-span-8 space-y-4">
-                <div class="bg-ef-bg-1 p-4 rounded-2xl border border-ef-bg-4 shadow-sm">
-                    <h2 class="text-sm font-black text-ef-fg mb-6 uppercase tracking-widest flex items-center gap-2">
-                        <span class="p-1.5 bg-ef-blue/10 text-ef-blue rounded-lg">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                            </svg>
-                        </span>
-                        Thông tin cơ bản
-                    </h2>
+            <div class="col-span-12 lg:col-span-8 space-y-6">
+                {{-- Box 1: Thông tin chung --}}
+                <div class="bg-ef-bg-1 p-6 rounded-xl border border-ef-bg-4">
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="w-1 h-4 bg-ef-blue rounded-full"></span>
+                        <h2 class="text-xs font-black uppercase tracking-widest text-ef-blue">Thông tin cơ bản</h2>
+                    </div>
 
-                    <div class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="md:col-span-1">
-                                <label class="block text-xs font-black text-ef-fg mb-2 uppercase tracking-wider">Tên sản
-                                    phẩm <span class="text-ef-red">*</span></label>
-                                <input type="text" name="name" id="name" value="{{ old('name') }}" required
-                                    class="w-full px-4 py-3 bg-ef-bg-0 border {{ $errors->has('name') ? 'border-ef-red' : 'border-ef-bg-4' }} rounded-xl focus:border-ef-blue focus:ring-4 focus:ring-ef-blue/5 outline-none transition-all text-ef-fg font-medium"
-                                    placeholder="Nhập tên sản phẩm...">
-                            </div>
-
-                            <div class="md:col-span-1">
-                                <label class="block text-xs font-black text-ef-fg mb-2 uppercase tracking-wider">Slug
-                                    (Đường dẫn)</label>
-                                <input type="text" name="slug" id="slug" value="{{ old('slug') }}"
-                                    class="w-full px-4 py-3 bg-ef-bg-2 border border-ef-bg-4 rounded-xl outline-none text-ef-grey-1 font-mono text-sm"
-                                    placeholder="tu-dong-tao-slug" readonly>
-                            </div>
+                    <div class="grid grid-cols-2 gap-5">
+                        <div class="col-span-2 md:col-span-1">
+                            <label class="block text-[10px] font-black uppercase mb-2 text-ef-grey-1">Tên sản phẩm <span
+                                    class="text-ef-red">*</span></label>
+                            <input type="text" name="name" id="name" value="{{ old('name') }}" required
+                                class="w-full px-3 py-2.5 bg-ef-bg-0 border border-ef-bg-4 rounded-lg text-sm focus:border-ef-blue focus:ring-1 focus:ring-ef-blue/20 outline-none transition-all"
+                                placeholder="VD: Trà Đào Cam Sả">
                         </div>
-
-                        <div>
-                            <label class="block text-xs font-black text-ef-fg mb-2 uppercase tracking-wider">Mô tả chi
-                                tiết</label>
-                            <textarea name="description" rows="8"
-                                class="w-full px-4 py-3 bg-ef-bg-0 border border-ef-bg-4 rounded-xl focus:border-ef-blue outline-none transition-all text-ef-fg text-sm leading-relaxed"
-                                placeholder="Viết mô tả hấp dẫn về sản phẩm của bạn...">{{ old('description') }}</textarea>
+                        <div class="col-span-2 md:col-span-1">
+                            <label class="block text-[10px] font-black uppercase mb-2 text-ef-grey-2">Đường dẫn
+                                (Slug)</label>
+                            <input type="text" name="slug" id="slug" value="{{ old('slug') }}" readonly
+                                class="w-full px-3 py-2.5 bg-ef-bg-2 border border-ef-bg-4 rounded-lg text-sm font-mono text-ef-grey-1 outline-none">
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-[10px] font-black uppercase mb-2 text-ef-grey-1">Mô tả ngắn</label>
+                            <textarea name="description" rows="4"
+                                class="w-full px-3 py-2.5 bg-ef-bg-0 border border-ef-bg-4 rounded-lg text-sm focus:border-ef-blue outline-none transition-all resize-none"
+                                placeholder="Viết vài dòng giới thiệu về món này...">{{ old('description') }}</textarea>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-ef-bg-1 p-4 rounded-2xl border border-ef-bg-4 shadow-sm">
-                    <h2 class="text-sm font-black text-ef-fg mb-6 uppercase tracking-widest flex items-center gap-2">
-                        <span class="p-1.5 bg-ef-green/10 text-ef-green rounded-lg">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </span>
-                        Giá cả & Kho hàng
-                    </h2>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                        <div>
-                            <label class="block text-xs font-black text-ef-fg mb-2 uppercase tracking-wider">Giá bán
-                                niêm yết</label>
-                            <div class="relative group">
-                                <input type="number" name="price" value="{{ old('price', 0) }}" required
-                                    class="w-full pl-5 pr-16 py-4 bg-ef-bg-0 border border-ef-bg-4 rounded-xl outline-none focus:border-ef-orange focus:ring-4 focus:ring-ef-orange/5 font-black text-xl text-ef-orange transition-all">
-                                <span
-                                    class="absolute right-5 top-1/2 -translate-y-1/2 text-xs font-black text-ef-grey-1 tracking-widest">VNĐ</span>
-                            </div>
+                {{-- Box 2: Giá & Kho --}}
+                <div class="bg-ef-bg-1 p-6 rounded-xl border border-ef-bg-4">
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="w-1 h-4 bg-ef-orange rounded-full"></span>
+                        <h2 class="text-xs font-black uppercase tracking-widest text-ef-orange">Giá cả & Tồn kho</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <div class="bg-ef-bg-0 p-3 rounded-lg border border-ef-bg-4">
+                            <label class="block text-[10px] font-black uppercase mb-1 text-ef-orange">Giá bán
+                                (VNĐ)</label>
+                            <input type="number" name="price" value="{{ old('price', 0) }}" required
+                                class="w-full bg-transparent border-none p-0 focus:ring-0 font-bold text-lg text-ef-fg">
                         </div>
-                        <div>
-                            <label class="block text-xs font-black text-ef-fg mb-2 uppercase tracking-wider">Tình trạng
-                                kho</label>
-                            <div class="relative">
-                                <select name="stock_status" id="stock_status"
-                                    class="w-full px-5 py-4 bg-ef-bg-0 border border-ef-bg-4 rounded-xl outline-none cursor-pointer focus:border-ef-blue font-bold appearance-none transition-all">
-                                    <option value="AVAILABLE" class="text-ef-green">CÒN HÀNG</option>
-                                    <option value="OUT_OF_STOCK" class="text-ef-red">HẾT HÀNG</option>
-                                </select>
-                                <div
-                                    class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-ef-grey-1">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                    </svg>
-                                </div>
-                            </div>
+                        <div class="bg-ef-bg-0 p-3 rounded-lg border border-ef-bg-4">
+                            <label class="block text-[10px] font-black uppercase mb-1 text-ef-blue">Số lượng</label>
+                            <input type="number" name="stock_quantity" value="{{ old('stock_quantity', 0) }}"
+                                min="0" required
+                                class="w-full bg-transparent border-none p-0 focus:ring-0 font-bold text-lg text-ef-fg">
+                        </div>
+                        <div class="flex flex-col justify-center px-1">
+                            <label class="block text-[10px] font-black uppercase mb-2 text-ef-grey-1">Trạng thái</label>
+                            <select name="stock_status"
+                                class="bg-transparent border-b border-ef-bg-4 py-1 text-xs font-bold uppercase outline-none cursor-pointer focus:border-ef-fg">
+                                <option value="AVAILABLE">● Còn hàng</option>
+                                <option value="OUT_OF_STOCK">○ Hết hàng</option>
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="lg:col-span-4 space-y-6">
-                <div class="bg-ef-bg-1 p-6 rounded-2xl border border-ef-bg-4 shadow-sm">
-                    <label class="block text-xs font-black text-ef-fg mb-4 uppercase tracking-widest">Danh mục</label>
-                    <select name="category_id" required
-                        class="w-full px-4 py-3 bg-ef-bg-0 border border-ef-bg-4 rounded-xl outline-none focus:border-ef-blue font-medium text-sm transition-all appearance-none">
-                        <option value="">-- Chọn danh mục --</option>
+            <div class="col-span-12 lg:col-span-4 space-y-6">
+                {{-- Danh mục --}}
+                <div class="bg-ef-bg-1 p-6 rounded-xl border border-ef-bg-4 shadow-sm">
+                    <label class="block text-[10px] font-black uppercase tracking-widest mb-4 text-ef-grey-1">Danh mục
+                        món</label>
+                    <div class="space-y-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}"
-                                {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                                {{ $category->name }}
-                            </option>
+                            <label
+                                class="flex items-center p-2 rounded-lg hover:bg-ef-bg-2 cursor-pointer transition-colors group">
+                                <input type="radio" name="category_id" value="{{ $category->id }}"
+                                    {{ old('category_id') == $category->id ? 'checked' : '' }}
+                                    class="w-3 h-3 text-ef-blue border-ef-bg-4 focus:ring-0 focus:ring-offset-0">
+                                <span
+                                    class="ml-3 text-xs font-bold text-ef-grey-2 group-hover:text-ef-fg">{{ $category->name }}</span>
+                            </label>
                         @endforeach
-                    </select>
-                </div>
-
-                <div class="bg-ef-bg-1 p-6 rounded-2xl border border-ef-bg-4 shadow-sm">
-                    <label class="block text-xs font-black text-ef-fg mb-4 uppercase tracking-widest">ảnh bìa</label>
-
-                    <div id="drop-zone" class="relative group">
-                        <div id="preview-wrapper"
-                            class="relative w-full aspect-square bg-ef-bg-2 rounded-2xl border-2 border-dashed border-ef-bg-4 overflow-hidden flex flex-col items-center justify-center transition-all group-hover:border-ef-blue/50 group-hover:bg-ef-blue/[0.02]">
-
-                            <img id="image-preview" src="#" class="hidden w-full h-full object-cover">
-
-                            <div id="placeholder-info"
-                                class="text-center p-6 transition-transform group-hover:scale-105">
-                                <div
-                                    class="w-16 h-16 bg-ef-bg-1 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-ef-bg-4 shadow-sm text-ef-grey-1 group-hover:text-ef-blue group-hover:border-ef-blue/20 transition-all">
-                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                    </svg>
-                                </div>
-                                <p class="text-[11px] font-black text-ef-fg uppercase tracking-tighter">Click để thêm ảnh</p>
-                                <p class="mt-1 text-[10px] text-ef-grey-1 font-medium">Hỗ trợ: JPG, PNG, WEBP</p>
-                            </div>
-
-                            <div id="image-overlay"
-                                class="hidden absolute inset-0 bg-ef-fg/60 items-center justify-center opacity-0 group-hover:opacity-100 transition-all backdrop-blur-[2px]">
-                                <div
-                                    class="bg-white text-ef-fg px-4 py-2 rounded-full text-[10px] font-black tracking-widest uppercase shadow-xl">
-                                    Thay đổi ảnh</div>
-                            </div>
-
-                            <input type="file" name="image" id="input-image"
-                                class="absolute inset-0 opacity-0 cursor-pointer" accept="image/*">
-                        </div>
                     </div>
                 </div>
 
-                <div class="cursor-pointer bg-ef-bg-1 p-6 rounded-2xl border border-ef-bg-4 shadow-sm lg:hidden">
-                    <button type="submit" form="product-form"
-                        class="cursor-pointer w-full py-4 bg-ef-green text-white rounded-xl font-black text-xs tracking-widest shadow-lg shadow-ef-green/20 uppercase">
-                        XÁC NHẬN LƯU
-                    </button>
+                {{-- Hình ảnh --}}
+                <div class="bg-ef-bg-1 p-2 rounded-xl border border-ef-bg-4">
+                    <div id="drop-zone"
+                        class="relative group aspect-square bg-ef-bg-0 rounded-lg border-2 border-dashed border-ef-bg-4 flex flex-col items-center justify-center overflow-hidden transition-all">
+
+                        {{-- Preview Image --}}
+                        <img id="image-preview" src="#" class="hidden w-full h-full object-cover">
+
+                        {{-- Nút xóa ảnh (Chỉ hiện khi có ảnh) --}}
+                        <button type="button" id="btn-remove-image"
+                            class="hidden absolute top-2 right-2 p-1.5 bg-ef-red text-ef-bg-0 rounded-md shadow-lg hover:scale-110 transition-transform z-20">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M6 18L18 6M6 6l12 12" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </button>
+
+                        {{-- Placeholder --}}
+                        <div id="placeholder-info" class="text-center p-4">
+                            <div
+                                class="w-10 h-10 bg-ef-bg-2 rounded-full flex items-center justify-center mx-auto mb-3 transition-transform group-hover:scale-110">
+                                <svg class="w-5 h-5 text-ef-grey-1" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path d="M12 4v16m8-8H4" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                            </div>
+                            <p class="text-[10px] font-black uppercase text-ef-grey-1">Ảnh đại diện</p>
+                            <p id="image-error" class="text-[9px] font-bold text-ef-red mt-2 hidden italic"></p>
+                        </div>
+
+                        <input type="file" name="image" id="input-image"
+                            class="absolute inset-0 opacity-0 cursor-pointer z-10"
+                            accept="image/png, image/jpeg, image/webp">
+                    </div>
                 </div>
             </div>
         </form>
     </div>
-</x-admin>
 
-<script>
-    const nameInput = document.getElementById('name');
-    const slugInput = document.getElementById('slug');
+    <script>
+        // 1. Logic Auto-slug (Gọn hơn)
+        const nameInput = document.getElementById('name');
+        const slugInput = document.getElementById('slug');
 
-    nameInput.addEventListener('input', function() {
-        let name = this.value;
-        let slug = name.toLowerCase()
-            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-            .replace(/[đĐ]/g, 'd')
-            .replace(/([^0-9a-z-\s])/g, '')
-            .replace(/(\s+)/g, '-')
-            .replace(/-+/g, '-')
-            .replace(/^-+|-+$/g, '');
-        slugInput.value = slug;
-    });
+        nameInput?.addEventListener('input', () => {
+            const slug = nameInput.value.toLowerCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .replace(/[đĐ]/g, 'd')
+                .replace(/([^0-9a-z-\s])/g, '')
+                .replace(/(\s+)/g, '-')
+                .replace(/-+/g, '-')
+                .replace(/^-+|-+$/g, '');
+            slugInput.value = slug;
+        });
 
-    const inputImage = document.getElementById('input-image');
-    const imagePreview = document.getElementById('image-preview');
-    const placeholderInfo = document.getElementById('placeholder-info');
-    const overlay = document.getElementById('image-overlay');
-    const wrapper = document.getElementById('preview-wrapper');
+        // 2. Logic Hình ảnh (Preview & Validation)
+        const inputImage = document.getElementById('input-image');
+        const imagePreview = document.getElementById('image-preview');
+        const placeholder = document.getElementById('placeholder-info');
+        const btnRemove = document.getElementById('btn-remove-image');
+        const errorDisplay = document.getElementById('image-error');
+        const dropZone = document.getElementById('drop-zone');
 
-    function handleFiles(files) {
-        const file = files[0];
-        if (file && file.type.startsWith('image/')) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                imagePreview.src = e.target.result;
-                imagePreview.classList.remove('hidden');
-                placeholderInfo.classList.add('hidden');
-                overlay.classList.remove('hidden');
-                overlay.classList.add('flex');
-                wrapper.classList.remove('border-dashed');
-                wrapper.classList.add('border-solid', 'border-ef-blue/20');
-            };
-            reader.readAsDataURL(file);
-        }
-    }
+        const MAX_SIZE = 2 * 1024 * 1024; // 2MB
 
-    inputImage.addEventListener('change', function() {
-        handleFiles(this.files);
-    });
+        inputImage.addEventListener('change', function() {
+            const file = this.files[0];
+            errorDisplay.classList.add('hidden');
+            dropZone.classList.replace('border-ef-red', 'border-ef-bg-4');
 
-    document.getElementById('product-form').addEventListener('submit', function() {
-        const btn = document.getElementById('btn-submit-top');
-        btn.disabled = true;
-        btn.innerHTML = `
-            <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            if (file) {
+                // Kiểm tra dung lượng
+                if (file.size > MAX_SIZE) {
+                    errorDisplay.innerText = "Lỗi: File vượt quá 2MB!";
+                    errorDisplay.classList.remove('hidden');
+                    dropZone.classList.replace('border-ef-bg-4', 'border-ef-red');
+                    this.value = ""; // Reset input
+                    return;
+                }
+
+                // Đọc file và hiển thị
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imagePreview.src = e.target.result;
+                    imagePreview.classList.remove('hidden');
+                    placeholder.classList.add('hidden');
+                    btnRemove.classList.remove('hidden');
+                    dropZone.classList.add('border-solid');
+                    dropZone.classList.remove('border-dashed');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 3. Xóa ảnh
+        btnRemove.addEventListener('click', (e) => {
+            e.preventDefault();
+            inputImage.value = "";
+            imagePreview.classList.add('hidden');
+            imagePreview.src = "#";
+            placeholder.classList.remove('hidden');
+            btnRemove.classList.add('hidden');
+            dropZone.classList.replace('border-solid', 'border-dashed');
+            dropZone.classList.replace('border-ef-red', 'border-ef-bg-4');
+            errorDisplay.classList.add('hidden');
+        });
+
+        // 4. Loading khi Submit
+        document.getElementById('product-form').addEventListener('submit', function() {
+            const btn = document.getElementById('btn-submit-top');
+            btn.disabled = true;
+            btn.classList.add('opacity-70', 'cursor-not-allowed');
+            btn.innerHTML = `
+            <svg class="animate-spin h-3 w-3 text-ef-bg-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
             <span class="ml-2">ĐANG LƯU...</span>
         `;
-        btn.classList.add('flex', 'items-center', 'justify-center');
-    });
-</script>
+        });
+    </script>
+</x-admin>
