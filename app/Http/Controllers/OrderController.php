@@ -48,8 +48,21 @@ class OrderController extends Controller
 
                 // 2. Kiểm tra: Nếu không đủ hoặc trạng thái 'OUT_OF_STOCK'
                 if (!$product || $product->stock_quantity < $item['quantity'] || $product->stock_status === 'OUT_OF_STOCK') {
-                    // Hủy toàn bộ giao dịch
-                    throw new \Exception("Sản phẩm '{$item['name']}' hiện đã hết hoặc không đủ số lượng.");
+                    // Hủy giao dịch, xóa sản phẩm khỏi giỏ hàng và chuyển về trang sản phẩm với thông báo modal
+                    DB::rollBack();
+
+                    $cartSession = session()->get('cart', []);
+                    if (isset($cartSession[$productId])) {
+                        unset($cartSession[$productId]);
+                        session()->put('cart', $cartSession);
+                    }
+
+                    return redirect()->route('cart')->with('conflict', [
+                        'id' => $productId,
+                        'type' => 'removed',
+                        'name' => $item['name'],
+                        'message' => "Sản phẩm '{$item['name']}' đã được mua bởi người khác. Lựa chọn đã bị xóa khỏi giỏ hàng."
+                    ]);
                 }
 
                 // 3. Trừ số lượng tồn kho

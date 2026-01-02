@@ -19,7 +19,37 @@
   @include('partials.navbar')
 
   <main class="pt-24 pb-10 px-6 max-w-7xl mx-auto min-h-screen">
-      
+
+      @if(session('conflict'))
+        <div id="conflict-modal-backdrop" class="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center hidden">
+          <div id="conflict-modal" class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+            <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+              <div class="sm:flex sm:items-start">
+                <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                  <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"></path>
+                  </svg>
+                </div>
+                <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                  <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Sản phẩm đã không còn</h3>
+                  <div class="mt-2">
+                    <p class="text-sm text-gray-500">{{ session('conflict.message') }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+              <button type="button" id="confirm-go-product" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">
+                Đi tới sản phẩm
+              </button>
+              <button type="button" id="close-conflict-modal" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">
+                Đóng
+              </button>
+            </div>
+          </div>
+        </div>
+      @endif
+
       <div class="flex items-center justify-between mb-8">
           <h1 class="text-3xl font-bold text-amber-800 uppercase tracking-wide">
               Thực đơn
@@ -33,7 +63,7 @@
         <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             
             @foreach($products as $product)
-                <div class="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 group border border-gray-100 overflow-hidden flex flex-col">
+                <div id="product-{{ $product->id }}" class="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 group border border-gray-100 overflow-hidden flex flex-col">
                     
                     <div class="relative h-48 w-full bg-gray-100 overflow-hidden">
                         <img src="{{ $product->image_url }}" 
@@ -67,25 +97,28 @@
                             </span>
 
                             @if($product->stock_status == 'AVAILABLE')
-                                
-                                @auth
-                                    <form action="{{ route('cart.add', $product->id) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="w-8 h-8 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center hover:bg-amber-800 hover:text-white transition-colors" title="Thêm vào giỏ hàng">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-sm text-gray-600">SL: <span class="font-bold text-amber-800">{{ $product->stock_quantity }}</span></span>
+
+                                    @auth
+                                        <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="w-8 h-8 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center hover:bg-amber-800 hover:text-white transition-colors" title="Thêm vào giỏ hàng">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    @else
+                                        <a href="{{ route('auth', ['tab' => 'login']) }}" 
+                                            class="w-8 h-8 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center hover:bg-amber-800 hover:text-white transition-colors" 
+                                            title="Đăng nhập để mua hàng">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                             </svg>
-                                        </button>
-                                    </form>
-                                @else
-                                    <a href="{{ route('auth', ['tab' => 'login']) }}" 
-                                        class="w-8 h-8 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center hover:bg-amber-800 hover:text-white transition-colors" 
-                                        title="Đăng nhập để mua hàng">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                        </svg>
-                                    </a>
-                                @endauth
+                                        </a>
+                                    @endauth
+                                </div>
 
                             @else
                                 <button disabled class="px-3 py-1 bg-gray-100 text-gray-400 text-xs rounded cursor-not-allowed">
@@ -110,6 +143,37 @@
       @endif
 
   </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const conflict = {!! json_encode(session('conflict')) !!};
+      if (conflict) {
+        const backdrop = document.getElementById('conflict-modal-backdrop');
+        const closeBtn = document.getElementById('close-conflict-modal');
+        const confirmBtn = document.getElementById('confirm-go-product');
+        const openModal = () => backdrop.classList.remove('hidden');
+        const closeModal = () => backdrop.classList.add('hidden');
+
+        openModal();
+
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+        if (confirmBtn) confirmBtn.addEventListener('click', function() {
+          const el = document.getElementById('product-' + conflict.id);
+          if (el) {
+            // scroll and highlight
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            el.classList.add('ring-4', 'ring-amber-300');
+            // close modal after short delay
+            setTimeout(closeModal, 400);
+          } else {
+            // fallback: go to products list anchor
+            window.location.href = '{{ route("products") }}#product-' + conflict.id;
+          }
+        });
+      }
+    });
+  </script>
 
 </body>
 </html>
