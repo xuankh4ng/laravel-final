@@ -175,5 +175,7 @@
     });
   </script>
 
+@include('partials.chatbox')
+
 </body>
 </html>
