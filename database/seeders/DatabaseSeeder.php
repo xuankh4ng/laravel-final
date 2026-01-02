@@ -19,12 +19,22 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // USER
-        User::factory()->admin()->create([
+        User::factory()->create([
             'full_name' => 'Admin Shop',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('123456'),
+            'role' => 'ADMIN',
         ]);
-        User::factory(10)->create();
+        User::factory()->create([
+            'full_name' => 'Tester 1',
+            'email' => 'tester1@gmail.com',
+            'password' => Hash::make('123456'),
+        ]);
+        User::factory()->create([
+            'full_name' => 'Tester 2',
+            'email' => 'tester2@gmail.com',
+            'password' => Hash::make('123456'),
+        ]);
 
         // CATEGORIES
         $categories = Categories::create([

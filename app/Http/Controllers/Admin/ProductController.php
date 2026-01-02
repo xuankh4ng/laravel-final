@@ -44,6 +44,7 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
             'stock_status' => 'required|in:AVAILABLE,OUT_OF_STOCK',
+            'stock_quantity' => 'required|numeric|min:0',
         ]);
 
         $data = $request->all();

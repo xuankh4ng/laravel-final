@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->bigInteger('price')->default(0);
             $table->string('image_url', 600)->nullable();
+            $table->integer('stock_quantity')->default(10);
             $table->enum('stock_status', ['AVAILABLE', 'OUT_OF_STOCK'])->default('AVAILABLE');
             $table->timestamps();
         });

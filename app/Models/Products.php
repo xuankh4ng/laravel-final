@@ -19,6 +19,7 @@ class Products extends Model
         'price',
         'image_url',
         'stock_status',
+        'stock_quantity',
     ];
 
     protected static function boot()

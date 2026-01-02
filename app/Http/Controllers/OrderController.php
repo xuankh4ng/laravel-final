@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Orders;
 use App\Models\OrderItems;
+use App\Models\Products;
 
 class OrderController extends Controller
 {
@@ -41,6 +42,24 @@ class OrderController extends Controller
             ]);
 
             foreach ($cart as $productId => $item) {
+                // Giải quyết vấn đề tranh chấp với Pessimistic Locking
+                // 1. Khóa sản phẩm này
+                $product = Products::where('id', $productId)->lockForUpdate()->first();
+
+                // 2. Kiểm tra: Nếu không đủ hoặc trạng thái 'OUT_OF_STOCK'
+                if (!$product || $product->stock_quantity < $item['quantity'] || $product->stock_status === 'OUT_OF_STOCK') {
+                    // Hủy toàn bộ giao dịch
+                    throw new \Exception("Sản phẩm '{$item['name']}' hiện đã hết hoặc không đủ số lượng.");
+                }
+
+                // 3. Trừ số lượng tồn kho
+                $product->decrement('stock_quantity', $item['quantity']);
+
+                // 4. Cập nhật lại trạng thái 'OUT_OF_STOCK' khi số lượng = 0
+                if ($product->fresh()->stock_quantity <= 0) {
+                    $product->update(['stock_status' => 'OUT_OF_STOCK']);
+                }
+
                 OrderItems::create([
                     'order_id' => $order->id,
                     'product_id' => $productId,
