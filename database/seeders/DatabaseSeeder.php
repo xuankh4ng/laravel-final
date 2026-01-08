@@ -30,24 +30,5 @@ class DatabaseSeeder extends Seeder
             'email' => 'tester1@gmail.com',
             'password' => Hash::make('123456'),
         ]);
-        User::factory()->create([
-            'full_name' => 'Tester 2',
-            'email' => 'tester2@gmail.com',
-            'password' => Hash::make('123456'),
-        ]);
-
-        // CATEGORIES
-        $categories = Categories::create([
-            'slug' => 'ca-phe',
-            'name' => 'Cà phê',
-        ]);
-
-        // PRODUCTS
-        Products::factory(8)->create([
-            'category_id' => $categories->id,
-        ]);
-        Products::factory(4)->outOfStock()->create([
-            'category_id' => $categories->id,
-        ]);
     }
 }
